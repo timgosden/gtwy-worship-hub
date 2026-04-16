@@ -11,20 +11,19 @@
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --bg:        #0c1c24;
-      --bg-mid:    #102030;
-      --bg-card:   #132A38;
-      --bg-card2:  #0f2230;
+      --bg:        #17191b;
+      --bg-mid:    #1c1e21;
+      --bg-card:   #222527;
+      --bg-card2:  #1e2123;
       --border:    rgba(255,255,255,0.07);
-      --border-hi: rgba(94,167,191,0.3);
-      --accent:    #5EA7BF;
-      --accent-dim:rgba(94,167,191,0.12);
-      --text:      #EEF2F5;
-      --muted:     #6E8E9E;
-      --muted2:    #3D6070;
+      --border-hi: rgba(212,175,55,0.25);
+      --gold:      #C8A84A;
+      --text:      #EDEEF0;
+      --muted:     #76808A;
+      --muted2:    #44484E;
       --nav-h:     60px;
       --radius:    12px;
-      --max:       680px;
+      --max:       660px;
     }
 
     html { scroll-behavior: smooth; }
@@ -42,7 +41,7 @@
       position: fixed;
       inset: 0 0 auto 0;
       height: var(--nav-h);
-      background: rgba(12,28,36,0.94);
+      background: rgba(23,25,27,0.95);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--border);
@@ -59,17 +58,10 @@
       text-decoration: none;
     }
 
-    .logo-mark {
-      width: 32px;
+    /* GV logo SVG */
+    .logo-svg {
       height: 32px;
-      border: 1.5px solid var(--accent);
-      border-radius: 7px;
-      display: grid;
-      place-items: center;
-      font-size: 11px;
-      font-weight: 800;
-      color: var(--accent);
-      letter-spacing: -.5px;
+      width: 32px;
       flex-shrink: 0;
     }
 
@@ -85,9 +77,9 @@
       font-size: 10px;
       font-weight: 400;
       color: var(--muted);
-      letter-spacing: 0;
     }
 
+    /* nav links */
     .nav-links {
       display: flex;
       list-style: none;
@@ -110,7 +102,7 @@
 
     /* dropdown */
     .has-drop { position: relative; }
-    .has-drop > a::after { content: ' ▾'; font-size: 8px; opacity: .5; }
+    .has-drop > a::after { content: ' ▾'; font-size: 8px; opacity: .4; }
     .drop {
       position: absolute;
       top: calc(100% + 4px);
@@ -121,7 +113,7 @@
       padding: 4px;
       min-width: 175px;
       display: none;
-      box-shadow: 0 20px 48px rgba(0,0,0,.5);
+      box-shadow: 0 20px 48px rgba(0,0,0,.6);
     }
     .has-drop:hover .drop { display: block; }
     .drop a { display: block; padding: 8px 12px; border-radius: 7px; font-size: 12.5px; }
@@ -149,9 +141,8 @@
     .drawer {
       display: none;
       position: fixed;
-      top: var(--nav-h);
       inset: var(--nav-h) 0 0 0;
-      background: rgba(12,28,36,.98);
+      background: rgba(23,25,27,0.98);
       backdrop-filter: blur(20px);
       z-index: 99;
       padding: 24px;
@@ -184,7 +175,6 @@
       justify-content: center;
       text-align: center;
       padding: calc(var(--nav-h) + 60px) 24px 80px;
-      position: relative;
     }
 
     .hero-content {
@@ -197,7 +187,7 @@
       font-weight: 600;
       letter-spacing: 3px;
       text-transform: uppercase;
-      color: var(--accent);
+      color: var(--gold);
       margin-bottom: 24px;
     }
 
@@ -210,16 +200,17 @@
     }
 
     h1 span {
-      color: var(--accent);
+      display: block;
+      color: var(--muted);
       font-style: italic;
       font-weight: 300;
     }
 
     .rule {
-      width: 32px;
-      height: 1.5px;
-      background: var(--accent);
-      opacity: .6;
+      width: 28px;
+      height: 1px;
+      background: var(--gold);
+      opacity: .7;
       margin: 28px auto;
     }
 
@@ -227,24 +218,24 @@
       font-size: 16px;
       color: var(--muted);
       line-height: 1.75;
-      max-width: 440px;
+      max-width: 400px;
       margin: 0 auto 36px;
       font-weight: 400;
     }
 
-    /* ── QUICK TILES ── */
+    /* ── TILES ── */
     .tiles {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-      margin-bottom: 48px;
+      gap: 8px;
+      margin-bottom: 52px;
     }
 
     .tile {
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 20px 16px;
+      padding: 18px 16px;
       text-decoration: none;
       color: var(--text);
       transition: border-color .2s, background .2s;
@@ -260,28 +251,24 @@
     .tile-label {
       font-size: 13px;
       font-weight: 700;
-      margin-bottom: 3px;
+      margin-bottom: 2px;
       letter-spacing: -.2px;
     }
 
     .tile-sub {
       font-size: 11px;
       color: var(--muted);
-      font-weight: 400;
     }
 
     /* ── UPCOMING ── */
-    .upcoming {
-      text-align: left;
-      width: 100%;
-    }
+    .upcoming { text-align: left; width: 100%; }
 
     .section-label {
       font-size: 10px;
       font-weight: 600;
       letter-spacing: 2.5px;
       text-transform: uppercase;
-      color: var(--accent);
+      color: var(--gold);
       margin-bottom: 10px;
     }
 
@@ -314,22 +301,22 @@
       padding: 40px 24px;
     }
 
+    footer a {
+      color: var(--text);
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 6px;
+    }
+
     footer p {
-      font-size: 12px;
+      font-size: 11px;
       color: var(--muted2);
       letter-spacing: 2px;
       text-transform: uppercase;
-      font-weight: 500;
-    }
-
-    footer a {
-      color: var(--accent);
-      text-decoration: none;
-      font-size: 18px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      display: block;
-      margin-bottom: 8px;
     }
 
     /* ── RESPONSIVE ── */
@@ -338,7 +325,7 @@
       .burger { display: flex; }
     }
 
-    @media (min-width: 480px) {
+    @media (min-width: 500px) {
       .tiles { grid-template-columns: repeat(4, 1fr); }
     }
   </style>
@@ -348,7 +335,24 @@
 <!-- NAV -->
 <nav>
   <a href="#" class="logo">
-    <div class="logo-mark">GV</div>
+    <!-- GV inline SVG logo -->
+    <svg class="logo-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- G arc: 240° from 5-o'clock clockwise to 1-o'clock, leaving gap on right -->
+      <circle cx="50" cy="55" r="33"
+        stroke="white" stroke-width="11"
+        stroke-dasharray="138 70"
+        stroke-linecap="round"
+        transform="rotate(60 50 55)"/>
+      <!-- G crossbar -->
+      <line x1="50" y1="55" x2="82" y2="55"
+        stroke="white" stroke-width="11"
+        stroke-linecap="round"/>
+      <!-- V -->
+      <polyline points="33,28 50,52 67,28"
+        stroke="white" stroke-width="10"
+        stroke-linecap="round"
+        stroke-linejoin="round"/>
+    </svg>
     <div>
       <span class="logo-text">Worship Hub</span>
       <span class="logo-sub">Gateway Vineyard</span>
@@ -388,7 +392,7 @@
   <a href="#" onclick="closeDrawer()">Get Involved</a>
   <a href="#" onclick="closeDrawer()">Worship Team Roles</a>
   <a href="#" onclick="closeDrawer()">Rotas</a>
-  <a href="#" onclick="closeDrawer()" style="color:var(--accent)">Resources</a>
+  <a href="#" onclick="closeDrawer()" style="color:var(--gold)">Resources</a>
   <a href="#" onclick="closeDrawer()" class="sub">Worship Leaders</a>
   <a href="#" onclick="closeDrawer()" class="sub">Song Bank</a>
   <a href="#" onclick="closeDrawer()" class="sub">Songwriting</a>
@@ -405,16 +409,15 @@
 
     <div class="eyebrow">Gateway Vineyard Church</div>
 
-    <h1>Worship<br><span>Team Hub</span></h1>
+    <h1>Worship<span>Team Hub</span></h1>
 
     <div class="rule"></div>
 
     <p class="hero-desc">
       Everything you need to know about being part of the Gateway Vineyard
-      worship team — in one place.
+      worship team &mdash; in one place.
     </p>
 
-    <!-- Quick tiles — 2 col on mobile, 4 col on wider screens -->
     <div class="tiles">
       <a href="#" class="tile">
         <div class="tile-label">Rotas</div>
@@ -434,7 +437,6 @@
       </a>
     </div>
 
-    <!-- Upcoming dates -->
     <div class="upcoming">
       <div class="section-label">What's coming up</div>
       <h2>Upcoming Dates</h2>
