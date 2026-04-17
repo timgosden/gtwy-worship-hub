@@ -33,6 +33,13 @@
       font-weight: 700;
       color: var(--muted);
       letter-spacing: -.5px;
+      overflow: hidden;
+    }
+    .person-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
     }
     .person-info { flex: 1; }
     .person-name {
@@ -72,7 +79,7 @@
       <div class="section-label" style="margin-bottom:14px">Worship Site Co-ordinators</div>
 
       <div class="person-card">
-        <div class="person-avatar">TG</div>
+        <div class="person-avatar"><img src="images/tim.jpg" alt="Tim Gosden" /></div>
         <div class="person-info">
           <div class="person-name">Tim Gosden</div>
           <div class="person-role">Central Site Worship Co-ordinator</div>
