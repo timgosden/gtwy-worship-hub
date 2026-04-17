@@ -25,19 +25,19 @@
     </p>
 
     <div class="section-block">
-      <div class="card">
-        <div class="card-title">Central Service — Song List</div>
-        <p>The Central song bank is maintained as a shared Google Sheet. It includes keys, tempo, CCLI numbers and notes on arrangement.</p>
-        <p style="margin-top:12px"><a href="https://docs.google.com/spreadsheets/d/yoursheet" target="_blank" rel="noopener">Open Central Song Bank &rarr;</a></p>
-      </div>
 
-      <div class="card">
-        <div class="card-title">Chapel Service — Song List</div>
-        <p>The Chapel song bank reflects the slightly different style and congregational makeup of the Chapel service.</p>
-        <p style="margin-top:12px"><a href="https://docs.google.com/spreadsheets/d/yoursheet" target="_blank" rel="noopener">Open Chapel Song Bank &rarr;</a></p>
-      </div>
+      <input
+        class="form-input"
+        id="song-search"
+        type="search"
+        placeholder="Search songs…"
+        style="margin-bottom:12px"
+        oninput="filterSongs(this.value)"
+      />
 
-      <div class="card">
+      <div id="song-list"><p class="song-loading">Loading songs…</p></div>
+
+      <div class="card" style="margin-top:20px">
         <div class="card-title">Adding New Songs</div>
         <ul>
           <li>All new songs need to be approved by the Worship Site Co-ordinator before being introduced to the congregation</li>
@@ -47,11 +47,6 @@
         </ul>
       </div>
 
-      <div class="card">
-        <div class="card-title">Chord Charts &amp; Resources</div>
-        <p>Chord charts for all songs are stored in our shared Google Drive folder. Charts are in the Nashville Number System where possible for easy key transposition.</p>
-        <p style="margin-top:12px"><a href="https://drive.google.com/drive/folders/yourid" target="_blank" rel="noopener">Open Chord Charts Folder &rarr;</a></p>
-      </div>
     </div>
 
   </div>
@@ -63,5 +58,102 @@
 </footer>
 
 <script src="nav.js"></script>
+<script>
+var SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTtNUsL0_HwRl1yIgsjSw2StvJCmg--YZB1UN3dgkRSEZoxTwY2BoRcCL9Vvd8osQ/pub?gid=1919290250&single=true&output=csv';
+
+var allRows = [];
+var headers = [];
+
+function parseCSV(text) {
+  var lines = text.replace(/\r/g, '').split('\n');
+  return lines.map(function(line) {
+    var cells = [], cur = '', inQ = false;
+    for (var i = 0; i < line.length; i++) {
+      var c = line[i];
+      if (c === '"') { inQ = !inQ; }
+      else if (c === ',' && !inQ) { cells.push(cur.trim()); cur = ''; }
+      else { cur += c; }
+    }
+    cells.push(cur.trim());
+    return cells;
+  });
+}
+
+function renderSongs(rows) {
+  var el = document.getElementById('song-list');
+  if (!rows.length) {
+    el.innerHTML = '<p style="color:var(--muted);font-size:13px;font-style:italic">No songs found.</p>';
+    return;
+  }
+
+  // Identify key column indices by common header names
+  var titleIdx  = findCol(['song', 'title', 'song title', 'name']);
+  var artistIdx = findCol(['artist', 'writer', 'author', 'band']);
+  var keyIdx    = findCol(['key', 'musical key']);
+  var ccliIdx   = findCol(['ccli', 'ccli number', 'ccli no']);
+  var notesIdx  = findCol(['notes', 'note', 'comments']);
+  var serviceIdx = findCol(['service', 'site', 'central/chapel', 'location']);
+
+  var html = '';
+  rows.forEach(function(row) {
+    var title  = titleIdx  >= 0 ? row[titleIdx]  : row[0];
+    var artist = artistIdx >= 0 ? row[artistIdx] : '';
+    var key    = keyIdx    >= 0 ? row[keyIdx]    : '';
+    var ccli   = ccliIdx   >= 0 ? row[ccliIdx]   : '';
+    var notes  = notesIdx  >= 0 ? row[notesIdx]  : '';
+    var service = serviceIdx >= 0 ? row[serviceIdx] : '';
+
+    if (!title) return;
+
+    html += '<div class="song-row">';
+    html += '<div class="song-main">';
+    html += '<span class="song-title">' + esc(title) + '</span>';
+    if (artist) html += '<span class="song-artist">' + esc(artist) + '</span>';
+    html += '</div>';
+    html += '<div class="song-meta">';
+    if (key)     html += '<span class="song-chip key">' + esc(key) + '</span>';
+    if (service) html += '<span class="song-chip">' + esc(service) + '</span>';
+    if (ccli)    html += '<span class="song-chip muted">CCLI ' + esc(ccli) + '</span>';
+    html += '</div>';
+    if (notes) html += '<div class="song-notes">' + esc(notes) + '</div>';
+    html += '</div>';
+  });
+
+  el.innerHTML = html || '<p style="color:var(--muted);font-size:13px;font-style:italic">No songs found.</p>';
+}
+
+function findCol(names) {
+  for (var i = 0; i < headers.length; i++) {
+    if (names.indexOf(headers[i].toLowerCase()) >= 0) return i;
+  }
+  return -1;
+}
+
+function filterSongs(query) {
+  var q = query.toLowerCase();
+  if (!q) { renderSongs(allRows); return; }
+  renderSongs(allRows.filter(function(row) {
+    return row.some(function(cell) { return cell.toLowerCase().indexOf(q) >= 0; });
+  }));
+}
+
+function esc(s) {
+  return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+fetch(SHEET_URL)
+  .then(function(r) { return r.text(); })
+  .then(function(text) {
+    var parsed = parseCSV(text);
+    if (!parsed.length) return;
+    headers = parsed[0].map(function(h) { return h.replace(/^"|"$/g,''); });
+    allRows = parsed.slice(1).filter(function(r) { return r.some(function(c) { return c; }); });
+    renderSongs(allRows);
+  })
+  .catch(function() {
+    document.getElementById('song-list').innerHTML =
+      '<p style="color:var(--muted);font-size:13px">Couldn\'t load the song list — please try again shortly.</p>';
+  });
+</script>
 </body>
 </html>
