@@ -591,6 +591,196 @@ footer p {
   .form-row { grid-template-columns: 1fr; }
 }
 
+/* ── ROTA ── */
+.rota-section { margin-bottom: 48px; }
+
+.rota-month-heading {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin: 28px 0 8px;
+}
+
+.rota-month-heading:first-child { margin-top: 0; }
+
+.rota-row {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  margin-bottom: 6px;
+  display: grid;
+  grid-template-columns: 58px 1fr;
+  gap: 14px;
+  align-items: start;
+}
+
+.rota-row.past { opacity: 0.3; }
+.rota-row.no-service { opacity: 0.4; }
+
+.rota-date-col { padding-top: 2px; }
+
+.rota-day {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: block;
+}
+
+.rota-date-num {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  color: var(--text);
+  line-height: 1;
+  display: block;
+}
+
+.rota-month-abbr {
+  font-size: 10px;
+  color: var(--muted);
+  display: block;
+  margin-top: 1px;
+}
+
+.rota-time {
+  font-size: 9px;
+  font-weight: 600;
+  color: var(--muted2);
+  letter-spacing: .5px;
+  display: block;
+  margin-top: 4px;
+}
+
+.rota-body { min-width: 0; }
+
+.rota-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+.rota-band {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--muted);
+  letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+.rota-note {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--gold);
+  background: rgba(200,168,74,0.1);
+  border: 1px solid rgba(200,168,74,0.2);
+  border-radius: 4px;
+  padding: 2px 7px;
+}
+
+.rota-members { list-style: none; }
+
+.rota-member {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 2px 0;
+  font-size: 13px;
+  flex-wrap: wrap;
+}
+
+.rota-name {
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -.1px;
+}
+
+.rota-name.is-wl { color: var(--gold); }
+.rota-name.is-clash { text-decoration: line-through; color: var(--muted); }
+
+.rota-roles {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.rota-badge {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  border-radius: 3px;
+  padding: 1px 5px;
+}
+
+.rota-badge.clash {
+  background: rgba(220,80,80,0.12);
+  border: 1px solid rgba(220,80,80,0.2);
+  color: #e07070;
+}
+
+.rota-badge.tbc {
+  background: rgba(120,138,142,0.1);
+  border: 1px solid rgba(120,138,142,0.2);
+  color: var(--muted);
+}
+
+.rota-no-members {
+  font-size: 13px;
+  color: var(--muted2);
+  font-style: italic;
+}
+
+/* ── VIDEO LIST ── */
+.video-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 14px;
+}
+
+.video-list a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--bg-mid);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 16px;
+  text-decoration: none;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+  transition: border-color .2s, background .2s;
+}
+
+.video-list a:hover {
+  border-color: var(--border-hi);
+  background: var(--bg-card2);
+}
+
+.video-list a .video-icon {
+  width: 28px;
+  height: 28px;
+  background: rgba(200,168,74,0.12);
+  border: 1px solid rgba(200,168,74,0.2);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 11px;
+  color: var(--gold);
+}
+
 /* ── RESPONSIVE ── */
 @media (max-width: 640px) {
   .nav-links { display: none; }
