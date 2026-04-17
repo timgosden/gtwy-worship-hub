@@ -70,14 +70,48 @@
       </div>
 
       <div class="card">
-        <div class="card-title">How to Submit</div>
-        <ol>
-          <li>Write your song</li>
-          <li>Record a clean reference demo — vocal and acoustic guitar is ideal. A voice memo is fine, but please play it all the way through without background noise or interruptions</li>
-          <li>Attach a concise chord chart or lead sheet</li>
-          <li>Submit using the form below and wait to hear from the songwriting team (allow around 4 weeks)</li>
-        </ol>
-        <p style="margin-top:12px"><a href="#">Song Submission Form &rarr;</a></p>
+        <div class="card-title">Submit Your Song</div>
+        <p style="margin-bottom:20px">Fill in the form below. Upload your demo and chart to Google Drive first and paste the sharing links in. Allow around 4 weeks to hear back from the team.</p>
+
+        <div class="form-status" id="song-status"></div>
+
+        <form class="form" id="song-form" onsubmit="handleSong(event)">
+          <input type="hidden" name="formType" value="song" />
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="s-name">Your name <span class="req">*</span></label>
+              <input class="form-input" id="s-name" name="name" type="text" placeholder="Jane Smith" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="s-email">Email address <span class="req">*</span></label>
+              <input class="form-input" id="s-email" name="email" type="email" placeholder="jane@example.com" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="s-title">Song title <span class="req">*</span></label>
+            <input class="form-input" id="s-title" name="title" type="text" placeholder="e.g. You Are Faithful" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="s-demo">Link to demo recording <span class="req">*</span></label>
+            <input class="form-input" id="s-demo" name="demoLink" type="url" placeholder="Google Drive, Dropbox or SoundCloud link" required />
+            <span class="form-hint">Voice memo is fine — just play it through cleanly without interruptions</span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="s-chart">Link to chord chart / lead sheet</label>
+            <input class="form-input" id="s-chart" name="chartLink" type="url" placeholder="Google Drive or Dropbox link (optional)" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="s-notes">Notes for the team</label>
+            <textarea class="form-textarea" id="s-notes" name="notes" placeholder="Anything you'd like to share about the song — where it came from, what inspired it, or context that might be helpful…"></textarea>
+          </div>
+
+          <button class="form-submit" type="submit">Submit song</button>
+        </form>
       </div>
 
       <div class="card">
@@ -97,5 +131,16 @@
 </footer>
 
 <script src="nav.js"></script>
+<script src="forms.js"></script>
+<script>
+  function handleSong(e) {
+    e.preventDefault();
+    submitForm(
+      document.getElementById('song-form'),
+      document.getElementById('song-status'),
+      'Thanks for submitting! The songwriting team will be in touch within around 4 weeks.'
+    );
+  }
+</script>
 </body>
 </html>

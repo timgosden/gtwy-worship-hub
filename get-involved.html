@@ -63,8 +63,58 @@
 
       <div class="card">
         <div class="card-title">Expression of Interest</div>
-        <p>Ready to explore joining the team? Fill in the form and we'll be in touch.</p>
-        <p style="margin-top:12px"><a href="https://forms.gle/yourformlink" target="_blank" rel="noopener">Expression of Interest Form &rarr;</a></p>
+        <p style="margin-bottom:20px">Ready to explore joining the team? Fill in the form and we'll be in touch.</p>
+
+        <div class="form-status" id="interest-status"></div>
+
+        <form class="form" id="interest-form" onsubmit="handleInterest(event)">
+          <input type="hidden" name="formType" value="interest" />
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="i-name">Full name <span class="req">*</span></label>
+              <input class="form-input" id="i-name" name="name" type="text" placeholder="Jane Smith" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="i-email">Email address <span class="req">*</span></label>
+              <input class="form-input" id="i-email" name="email" type="email" placeholder="jane@example.com" required />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="i-instrument">Instrument / role <span class="req">*</span></label>
+              <select class="form-select" id="i-instrument" name="instrument" required>
+                <option value="" disabled selected>Select one…</option>
+                <option>Vocals — lead</option>
+                <option>Vocals — backing</option>
+                <option>Acoustic guitar</option>
+                <option>Electric guitar</option>
+                <option>Keys / piano</option>
+                <option>Drums</option>
+                <option>Bass</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="i-attendance">How long attending Gateway? <span class="req">*</span></label>
+              <select class="form-select" id="i-attendance" name="attendance" required>
+                <option value="" disabled selected>Select one…</option>
+                <option>Less than 3 months</option>
+                <option>3–6 months</option>
+                <option>6–12 months</option>
+                <option>Over a year</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="i-about">Tell us a bit about yourself <span class="req">*</span></label>
+            <textarea class="form-textarea" id="i-about" name="about" placeholder="Your musical background, experience in worship settings, and anything else you'd like us to know…" required></textarea>
+          </div>
+
+          <button class="form-submit" type="submit">Send expression of interest</button>
+        </form>
       </div>
     </div>
 
@@ -77,5 +127,16 @@
 </footer>
 
 <script src="nav.js"></script>
+<script src="forms.js"></script>
+<script>
+  function handleInterest(e) {
+    e.preventDefault();
+    submitForm(
+      document.getElementById('interest-form'),
+      document.getElementById('interest-status'),
+      'Thanks! We\'ll be in touch soon to arrange a chat.'
+    );
+  }
+</script>
 </body>
 </html>
