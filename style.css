@@ -98,15 +98,25 @@ nav {
 .has-drop > a::after { content: ' ▾'; font-size: 8px; opacity: .4; }
 .drop {
   position: absolute;
-  top: calc(100% + 4px);
+  top: 100%;
   right: 0;
   background: var(--bg-mid);
   border: 1px solid var(--border);
   border-radius: 10px;
   padding: 4px;
+  padding-top: 8px;
   min-width: 175px;
   display: none;
   box-shadow: 0 20px 48px rgba(0,0,0,.6);
+}
+/* Invisible bridge fills the gap so hover doesn't break */
+.drop::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 0;
+  right: 0;
+  height: 8px;
 }
 .has-drop:hover .drop { display: block; }
 .drop a { display: block; padding: 8px 12px; border-radius: 7px; font-size: 12.5px; }
