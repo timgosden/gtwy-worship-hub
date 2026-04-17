@@ -1,19 +1,11 @@
 (function () {
   const NAV_HTML = `
 <a href="index.html" class="logo">
-  <svg class="logo-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="50" cy="52" r="37"
-      stroke="white" stroke-width="17"
-      stroke-dasharray="194 39"
-      stroke-linecap="butt"
-      transform="rotate(30 50 52)"/>
-    <line x1="48" y1="52" x2="86" y2="52"
-      stroke="white" stroke-width="17"
-      stroke-linecap="butt"/>
-    <polyline points="18,18 50,56 80,14"
-      stroke="white" stroke-width="13"
-      stroke-linecap="round"
-      stroke-linejoin="round"/>
+  <svg class="logo-svg" viewBox="8 8 85 85" xmlns="http://www.w3.org/2000/svg">
+    <path fill="white" d="M50.6,10.2c-0.1,0-0.1,0-0.2,0c-22.4,0-40.6,18.2-40.6,40.6s18.2,40.6,40.6,40.6C72.9,91.4,91,73.2,91,50.8
+      l0.1-40.7L50.6,10.2z M58.6,19.5l8.5,17.3h0.1l8.5-17.3h5.9L67.3,48.8h-0.2L52.6,19.5H58.6z M50.5,82.1c-17.3,0-31.3-14-31.3-31.3
+      c0-16.3,12.5-29.7,28.4-31.2l3,6.1c0,0-0.1,0-0.1,0c-6.7,0-13,2.6-17.7,7.3c-4.7,4.7-7.3,11-7.3,17.7c0,6.7,2.6,13,7.3,17.7
+      c4.7,4.7,11,7.3,17.7,7.3s13-2.6,17.7-7.3c3.2-3.2,5.5-7.2,6.6-11.5H50.6v-6.2h25h6.2C81.8,68.1,67.8,82.1,50.5,82.1z"/>
   </svg>
   <div>
     <span class="logo-text">Worship Hub</span>
