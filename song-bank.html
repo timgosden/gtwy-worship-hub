@@ -136,13 +136,19 @@ function renderSections(sections) {
     if (!s.songs.length) return;
     html += '<p class="rota-month-heading">' + esc(s.section) + '</p>';
     s.songs.forEach(function(song) {
+      var ccliLink = song.ccli
+        ? 'https://songselect.ccli.com/Songs/' + esc(song.ccli)
+        : '';
+      var titleEl = ccliLink
+        ? '<a class="song-title" href="' + ccliLink + '" target="_blank" rel="noopener">' + esc(song.title) + '</a>'
+        : '<span class="song-title">' + esc(song.title) + '</span>';
+
       html += '<div class="song-row">'
         + '<div class="song-main">'
-        + '<span class="song-title">' + esc(song.title) + '</span>'
+        + titleEl
         + (song.firstLine ? '<span class="song-first-line">' + esc(song.firstLine) + '</span>' : '')
         + '</div>'
         + '<div class="song-meta">'
-        + (song.ccli ? '<span class="song-chip muted">CCLI ' + esc(song.ccli) + '</span>' : '')
         + notesBadge(song.notes)
         + '</div>'
         + '</div>';
