@@ -93,7 +93,18 @@ function buildSections(rows) {
     sectionsMap[section].push({ title: title, firstLine: firstLine, ccli: ccli, themes: themes, notes: notes });
   });
 
-  return sectionOrder.map(function(s) {
+  var SECTION_ORDER = [
+    'Gathering / Call to Worship',
+    'Revelation',
+    'Response / Encounter / Intimacy',
+    'Vineyard Classics'
+  ];
+
+  // Use fixed order, fall back to any extra sections appended at the end
+  var ordered = SECTION_ORDER.filter(function(s) { return sectionsMap[s]; });
+  sectionOrder.forEach(function(s) { if (ordered.indexOf(s) < 0) ordered.push(s); });
+
+  return ordered.map(function(s) {
     return { section: s, songs: sectionsMap[s] };
   });
 }
@@ -109,7 +120,7 @@ function sectionClass(name) {
 
 function themeBadge(themes) {
   if (!themes) return '';
-  return '<span class="song-chip sc-theme">' + esc(themes) + '</span>';
+  return '<span class="song-chip theme">' + esc(themes) + '</span>';
 }
 
 function notesBadge(notes) {
