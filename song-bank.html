@@ -21,7 +21,7 @@
     <h1 class="page-title">Song<span>Bank</span></h1>
     <div class="rule left"></div>
     <p class="page-desc">
-      Our approved song lists for Central and Chapel services. These are the songs our congregations know well.
+      Our approved song list for Central and Chapel services. Updated live from the shared spreadsheet.
     </p>
 
     <div class="section-block">
@@ -30,14 +30,14 @@
         class="form-input"
         id="song-search"
         type="search"
-        placeholder="Search songs…"
-        style="margin-bottom:12px"
+        placeholder="Search songs, first lines or CCLI numbers…"
+        style="margin-bottom:16px"
         oninput="filterSongs(this.value)"
       />
 
-      <div id="song-list"><p class="song-loading">Loading songs…</p></div>
+      <div id="song-list"><p class="song-loading">Loading…</p></div>
 
-      <div class="card" style="margin-top:20px">
+      <div class="card" style="margin-top:24px">
         <div class="card-title">Adding New Songs</div>
         <ul>
           <li>All new songs need to be approved by the Worship Site Co-ordinator before being introduced to the congregation</li>
@@ -61,8 +61,8 @@
 <script>
 var SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTtNUsL0_HwRl1yIgsjSw2StvJCmg--YZB1UN3dgkRSEZoxTwY2BoRcCL9Vvd8osQ/pub?gid=1919290250&single=true&output=csv';
 
-var allRows = [];
-var headers = [];
+// Parsed structure: [{section:'...', songs:[{title,firstLine,ccli,notes},...]}]
+var allSections = [];
 
 function parseCSV(text) {
   var lines = text.replace(/\r/g, '').split('\n');
@@ -79,62 +79,94 @@ function parseCSV(text) {
   });
 }
 
-function renderSongs(rows) {
+function buildSections(rows) {
+  var sections = [];
+  var current = null;
+
+  rows.forEach(function(row) {
+    var c0 = row[0] || '', c1 = row[1] || '', c2 = row[2] || '';
+
+    // Skip empty rows
+    if (!c0 && !c1 && !c2) return;
+    // Skip the sheet title row
+    if (c0.indexOf('SONGBANK') >= 0 || c0.indexOf('SONG BANK') >= 0) return;
+    // Skip column header rows
+    if (c0 === 'Song Title') return;
+
+    // Section header: text only in first cell
+    if (c0 && !c1 && !c2) {
+      current = { section: c0, songs: [] };
+      sections.push(current);
+      return;
+    }
+
+    // Song row
+    if (c0 && current) {
+      current.songs.push({
+        title:     c0,
+        firstLine: c1,
+        ccli:      c2,
+        notes:     row[3] || ''
+      });
+    }
+  });
+
+  return sections;
+}
+
+function notesBadge(notes) {
+  if (!notes) return '';
+  var lower = notes.toLowerCase();
+  var cls = lower.indexOf('classic') >= 0 ? 'song-chip key' :
+            lower.indexOf('vineyard') >= 0 ? 'song-chip vineyard' : 'song-chip';
+  return '<span class="' + cls + '">' + esc(notes) + '</span>';
+}
+
+function renderSections(sections) {
   var el = document.getElementById('song-list');
-  if (!rows.length) {
+  var total = sections.reduce(function(n, s) { return n + s.songs.length; }, 0);
+
+  if (!total) {
     el.innerHTML = '<p style="color:var(--muted);font-size:13px;font-style:italic">No songs found.</p>';
     return;
   }
 
-  // Identify key column indices by common header names
-  var titleIdx  = findCol(['song', 'title', 'song title', 'name']);
-  var artistIdx = findCol(['artist', 'writer', 'author', 'band']);
-  var keyIdx    = findCol(['key', 'musical key']);
-  var ccliIdx   = findCol(['ccli', 'ccli number', 'ccli no']);
-  var notesIdx  = findCol(['notes', 'note', 'comments']);
-  var serviceIdx = findCol(['service', 'site', 'central/chapel', 'location']);
-
   var html = '';
-  rows.forEach(function(row) {
-    var title  = titleIdx  >= 0 ? row[titleIdx]  : row[0];
-    var artist = artistIdx >= 0 ? row[artistIdx] : '';
-    var key    = keyIdx    >= 0 ? row[keyIdx]    : '';
-    var ccli   = ccliIdx   >= 0 ? row[ccliIdx]   : '';
-    var notes  = notesIdx  >= 0 ? row[notesIdx]  : '';
-    var service = serviceIdx >= 0 ? row[serviceIdx] : '';
-
-    if (!title) return;
-
-    html += '<div class="song-row">';
-    html += '<div class="song-main">';
-    html += '<span class="song-title">' + esc(title) + '</span>';
-    if (artist) html += '<span class="song-artist">' + esc(artist) + '</span>';
-    html += '</div>';
-    html += '<div class="song-meta">';
-    if (key)     html += '<span class="song-chip key">' + esc(key) + '</span>';
-    if (service) html += '<span class="song-chip">' + esc(service) + '</span>';
-    if (ccli)    html += '<span class="song-chip muted">CCLI ' + esc(ccli) + '</span>';
-    html += '</div>';
-    if (notes) html += '<div class="song-notes">' + esc(notes) + '</div>';
-    html += '</div>';
+  sections.forEach(function(s) {
+    if (!s.songs.length) return;
+    html += '<p class="rota-month-heading">' + esc(s.section) + '</p>';
+    s.songs.forEach(function(song) {
+      html += '<div class="song-row">'
+        + '<div class="song-main">'
+        + '<span class="song-title">' + esc(song.title) + '</span>'
+        + (song.firstLine ? '<span class="song-first-line">' + esc(song.firstLine) + '</span>' : '')
+        + '</div>'
+        + '<div class="song-meta">'
+        + (song.ccli ? '<span class="song-chip muted">CCLI ' + esc(song.ccli) + '</span>' : '')
+        + notesBadge(song.notes)
+        + '</div>'
+        + '</div>';
+    });
   });
 
-  el.innerHTML = html || '<p style="color:var(--muted);font-size:13px;font-style:italic">No songs found.</p>';
-}
-
-function findCol(names) {
-  for (var i = 0; i < headers.length; i++) {
-    if (names.indexOf(headers[i].toLowerCase()) >= 0) return i;
-  }
-  return -1;
+  el.innerHTML = html;
 }
 
 function filterSongs(query) {
-  var q = query.toLowerCase();
-  if (!q) { renderSongs(allRows); return; }
-  renderSongs(allRows.filter(function(row) {
-    return row.some(function(cell) { return cell.toLowerCase().indexOf(q) >= 0; });
-  }));
+  var q = query.toLowerCase().trim();
+  if (!q) { renderSections(allSections); return; }
+
+  var filtered = allSections.map(function(s) {
+    return {
+      section: s.section,
+      songs: s.songs.filter(function(song) {
+        return (song.title + ' ' + song.firstLine + ' ' + song.ccli + ' ' + song.notes)
+          .toLowerCase().indexOf(q) >= 0;
+      })
+    };
+  });
+
+  renderSections(filtered);
 }
 
 function esc(s) {
@@ -144,11 +176,9 @@ function esc(s) {
 fetch(SHEET_URL)
   .then(function(r) { return r.text(); })
   .then(function(text) {
-    var parsed = parseCSV(text);
-    if (!parsed.length) return;
-    headers = parsed[0].map(function(h) { return h.replace(/^"|"$/g,''); });
-    allRows = parsed.slice(1).filter(function(r) { return r.some(function(c) { return c; }); });
-    renderSongs(allRows);
+    var rows = parseCSV(text);
+    allSections = buildSections(rows);
+    renderSections(allSections);
   })
   .catch(function() {
     document.getElementById('song-list').innerHTML =
