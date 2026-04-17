@@ -780,23 +780,42 @@ footer p {
 }
 
 .song-row.sc-gathering {
-  border-left-color: rgba(230, 150, 50, 0.55);
-  background: rgba(230, 150, 50, 0.03);
+  border-left-color: rgba(230, 150, 50, 0.8);
+  background: rgba(230, 150, 50, 0.06);
 }
 
 .song-row.sc-revelation {
-  border-left-color: rgba(70, 145, 215, 0.55);
-  background: rgba(70, 145, 215, 0.03);
+  border-left-color: rgba(70, 145, 215, 0.8);
+  background: rgba(70, 145, 215, 0.06);
 }
 
 .song-row.sc-response {
-  border-left-color: rgba(155, 100, 210, 0.55);
-  background: rgba(155, 100, 210, 0.03);
+  border-left-color: rgba(155, 100, 210, 0.8);
+  background: rgba(155, 100, 210, 0.06);
 }
 
 .song-row.sc-homegrown {
-  border-left-color: rgba(70, 180, 105, 0.55);
-  background: rgba(70, 180, 105, 0.03);
+  border-left-color: rgba(70, 180, 105, 0.8);
+  background: rgba(70, 180, 105, 0.06);
+}
+
+/* Section heading colour dots */
+.rota-month-heading.sc-gathering::before { color: rgba(230, 150, 50, 0.9); }
+.rota-month-heading.sc-revelation::before { color: rgba(70, 145, 215, 0.9); }
+.rota-month-heading.sc-response::before { color: rgba(155, 100, 210, 0.9); }
+.rota-month-heading.sc-homegrown::before { color: rgba(70, 180, 105, 0.9); }
+.rota-month-heading.sc-gathering,
+.rota-month-heading.sc-revelation,
+.rota-month-heading.sc-response,
+.rota-month-heading.sc-homegrown {
+  color: inherit;
+}
+.rota-month-heading.sc-gathering::before,
+.rota-month-heading.sc-revelation::before,
+.rota-month-heading.sc-response::before,
+.rota-month-heading.sc-homegrown::before {
+  content: '● ';
+  font-size: 8px;
 }
 
 .song-main {

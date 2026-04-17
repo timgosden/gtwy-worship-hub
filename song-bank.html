@@ -134,8 +134,8 @@ function renderSections(sections) {
   var html = '';
   sections.forEach(function(s) {
     if (!s.songs.length) return;
-    html += '<p class="rota-month-heading">' + esc(s.section) + '</p>';
     var sc = sectionClass(s.section);
+    html += '<p class="rota-month-heading' + (sc ? ' ' + sc : '') + '">' + esc(s.section) + '</p>';
     s.songs.forEach(function(song) {
       var ccliLink = song.ccli
         ? 'https://songselect.ccli.com/Songs/' + esc(song.ccli)
