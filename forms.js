@@ -1,5 +1,5 @@
 // Replace this URL with your deployed Google Apps Script web app URL
-var SCRIPT_URL = 'YOUR_APPS_SCRIPT_URL_HERE';
+var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzjxZNKHoW_zTCBIAzm0edXlbyucq_pKlfDoLGaWsBRVpTmbX67_RHcu-d7atlWJex0eg/exec';
 
 function submitForm(formEl, statusEl, successMsg) {
   var btn = formEl.querySelector('.form-submit');
