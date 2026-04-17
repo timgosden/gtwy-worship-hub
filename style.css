@@ -387,7 +387,7 @@ h3 {
 }
 
 .cal-wrap {
-  background: var(--bg-card);
+  background: var(--bg-mid);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   overflow: hidden;
@@ -395,9 +395,10 @@ h3 {
 
 .cal-wrap iframe {
   width: 100%;
-  min-height: 360px;
+  min-height: 480px;
   border: none;
   display: block;
+  color-scheme: dark;
 }
 
 /* ── TAG ── */
