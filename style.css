@@ -738,6 +738,21 @@ footer p {
   font-style: italic;
 }
 
+.rota-row.is-next {
+  border-color: rgba(200,168,74,0.35);
+  background: rgba(200,168,74,0.05);
+}
+
+.rota-next-label {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+
 /* ── VIDEO LIST ── */
 .video-list {
   list-style: none;

@@ -227,4 +227,4 @@ var CENTRAL_ROTA = [
   {date:'30-Aug-2026',time:'8:45am',note:'No service — bank holiday',band:'',members:[]},
 ];
 
-renderRota('rota-central', CENTRAL_ROTA);
+renderRota('rota-central', CENTRAL_ROTA, { scroll: true });

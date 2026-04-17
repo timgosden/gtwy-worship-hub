@@ -12,12 +12,15 @@
     return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   }
 
-  g.renderRota = function(id, data) {
+  g.renderRota = function(id, data, opts) {
+    opts = opts || {};
     var el = document.getElementById(id);
     if (!el) return;
     var today = new Date(); today.setHours(0,0,0,0);
 
     var groups = [], map = {};
+    var nextIdx = -1, globalIdx = 0;
+
     data.forEach(function(r) {
       var d = pd(r.date);
       var k = d.getFullYear() * 100 + d.getMonth();
@@ -25,7 +28,10 @@
         map[k] = [];
         groups.push({ label: ML[d.getMonth()] + ' ' + d.getFullYear(), rows: map[k] });
       }
-      map[k].push({ r: r, d: d });
+      var past = d < today;
+      if (!past && nextIdx === -1) nextIdx = globalIdx;
+      map[k].push({ r: r, d: d, past: past, globalIdx: globalIdx });
+      globalIdx++;
     });
 
     var html = '';
@@ -33,9 +39,12 @@
       html += '<p class="rota-month-heading">' + grp.label + '</p>';
       grp.rows.forEach(function(item) {
         var r = item.r, d = item.d;
-        var past = d < today;
         var noService = !r.members || r.members.length === 0;
-        var cls = 'rota-row' + (past ? ' past' : '') + (noService ? ' no-service' : '');
+        var isNext = item.globalIdx === nextIdx && !noService;
+        var cls = 'rota-row'
+          + (item.past ? ' past' : '')
+          + (noService ? ' no-service' : '')
+          + (isNext ? ' is-next' : '');
 
         var dc = '<div class="rota-date-col">'
           + '<span class="rota-day">' + DS[d.getDay()] + '</span>'
@@ -45,6 +54,7 @@
           + '</div>';
 
         var body = '<div class="rota-body">';
+        if (isNext) body += '<span class="rota-next-label">Next up</span>';
         if (noService) {
           body += '<p class="rota-no-members">' + esc(r.note || 'No service') + '</p>';
         } else {
@@ -64,10 +74,21 @@
           body += '</ul>';
         }
         body += '</div>';
-        html += '<div class="' + cls + '">' + dc + body + '</div>';
+        html += '<div class="' + cls + '" id="' + (isNext ? id + '-next' : '') + '">' + dc + body + '</div>';
       });
     });
 
     el.innerHTML = html;
+
+    // Scroll to the next upcoming service (only if requested)
+    if (opts.scroll) {
+      var nextEl = document.getElementById(id + '-next');
+      if (nextEl) {
+        setTimeout(function() {
+          var top = nextEl.getBoundingClientRect().top + window.scrollY - 80;
+          window.scrollTo({ top: top, behavior: 'smooth' });
+        }, 150);
+      }
+    }
   };
 })(window);
