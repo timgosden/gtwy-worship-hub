@@ -866,6 +866,18 @@ footer p {
   border-color: rgba(138,180,196,0.2);
 }
 
+.song-chip.homegrown {
+  color: #7ec8a0;
+  background: rgba(126,200,160,0.08);
+  border-color: rgba(126,200,160,0.2);
+}
+
+.song-chip.sc-theme {
+  color: #b4a0d8;
+  background: rgba(180,160,216,0.08);
+  border-color: rgba(180,160,216,0.2);
+}
+
 .song-chip.muted { color: var(--muted); }
 
 .song-first-line {
