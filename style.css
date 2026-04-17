@@ -773,9 +773,30 @@ footer p {
 .song-row {
   background: var(--bg-card);
   border: 1px solid var(--border);
+  border-left: 3px solid var(--border);
   border-radius: var(--radius);
   padding: 14px 18px;
   margin-bottom: 6px;
+}
+
+.song-row.sc-gathering {
+  border-left-color: rgba(230, 150, 50, 0.55);
+  background: rgba(230, 150, 50, 0.03);
+}
+
+.song-row.sc-revelation {
+  border-left-color: rgba(70, 145, 215, 0.55);
+  background: rgba(70, 145, 215, 0.03);
+}
+
+.song-row.sc-response {
+  border-left-color: rgba(155, 100, 210, 0.55);
+  background: rgba(155, 100, 210, 0.03);
+}
+
+.song-row.sc-homegrown {
+  border-left-color: rgba(70, 180, 105, 0.55);
+  background: rgba(70, 180, 105, 0.03);
 }
 
 .song-main {

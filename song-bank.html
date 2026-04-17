@@ -37,15 +37,6 @@
 
       <div id="song-list"><p class="song-loading">Loading…</p></div>
 
-      <div class="card" style="margin-top:24px">
-        <div class="card-title">Adding New Songs</div>
-        <ul>
-          <li>All new songs need to be approved by the Worship Site Co-ordinator before being introduced to the congregation</li>
-          <li>New songs should be taught for at least 2–3 weeks before being considered part of the bank</li>
-          <li>Consider singability — can the average person pick it up quickly?</li>
-          <li>Check CCLI licensing before using any song</li>
-        </ul>
-      </div>
 
     </div>
 
@@ -114,6 +105,15 @@ function buildSections(rows) {
   return sections;
 }
 
+function sectionClass(name) {
+  var s = name.toUpperCase();
+  if (s.indexOf('GATHERING') >= 0 || s.indexOf('CALL TO WORSHIP') >= 0) return 'sc-gathering';
+  if (s.indexOf('REVELATION') >= 0) return 'sc-revelation';
+  if (s.indexOf('RESPONSE') >= 0 || s.indexOf('ENCOUNTER') >= 0 || s.indexOf('INTIMACY') >= 0) return 'sc-response';
+  if (s.indexOf('HOMEGROWN') >= 0 || s.indexOf('GATEWAY') >= 0) return 'sc-homegrown';
+  return '';
+}
+
 function notesBadge(notes) {
   if (!notes) return '';
   var lower = notes.toLowerCase();
@@ -135,6 +135,7 @@ function renderSections(sections) {
   sections.forEach(function(s) {
     if (!s.songs.length) return;
     html += '<p class="rota-month-heading">' + esc(s.section) + '</p>';
+    var sc = sectionClass(s.section);
     s.songs.forEach(function(song) {
       var ccliLink = song.ccli
         ? 'https://songselect.ccli.com/Songs/' + esc(song.ccli)
@@ -143,7 +144,7 @@ function renderSections(sections) {
         ? '<a class="song-title" href="' + ccliLink + '" target="_blank" rel="noopener">' + esc(song.title) + '</a>'
         : '<span class="song-title">' + esc(song.title) + '</span>';
 
-      html += '<div class="song-row">'
+      html += '<div class="song-row' + (sc ? ' ' + sc : '') + '">'
         + '<div class="song-main">'
         + titleEl
         + (song.firstLine ? '<span class="song-first-line">' + esc(song.firstLine) + '</span>' : '')
