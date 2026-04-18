@@ -597,6 +597,29 @@ footer p {
   color: #e08080;
 }
 
+[data-fs-success], [data-fs-error] {
+  display: none;
+  padding: 14px 16px;
+  border-radius: 8px;
+  font-size: 13.5px;
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+[data-fs-success][data-fs-active] {
+  display: block;
+  background: rgba(200,168,74,0.08);
+  border: 1px solid rgba(200,168,74,0.2);
+  color: var(--gold);
+}
+
+[data-fs-error=""][data-fs-active] {
+  display: block;
+  background: rgba(220,80,80,0.08);
+  border: 1px solid rgba(220,80,80,0.15);
+  color: #e08080;
+}
+
 @media (max-width: 480px) {
   .form-row { grid-template-columns: 1fr; }
 }
