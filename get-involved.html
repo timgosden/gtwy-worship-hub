@@ -65,26 +65,27 @@
         <div class="card-title">Expression of Interest</div>
         <p style="margin-bottom:20px">Ready to explore joining the team? Fill in the form and we'll be in touch.</p>
 
-        <div class="form-status" id="interest-status"></div>
+        <div data-fs-success>Thanks! We'll be in touch soon to arrange a chat.</div>
+        <div data-fs-error>Something went wrong — please try again or get in touch directly.</div>
 
-        <form class="form" id="interest-form" onsubmit="handleInterest(event)">
+        <form class="form" id="interest-form">
           <input type="hidden" name="formType" value="interest" />
 
           <div class="form-row">
             <div class="form-group">
               <label class="form-label" for="i-name">Full name <span class="req">*</span></label>
-              <input class="form-input" id="i-name" name="name" type="text" placeholder="Jane Smith" required />
+              <input class="form-input" id="i-name" name="name" type="text" placeholder="Jane Smith" required data-fs-field />
             </div>
             <div class="form-group">
               <label class="form-label" for="i-email">Email address <span class="req">*</span></label>
-              <input class="form-input" id="i-email" name="email" type="email" placeholder="jane@example.com" required />
+              <input class="form-input" id="i-email" name="email" type="email" placeholder="jane@example.com" required data-fs-field />
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-group">
               <label class="form-label" for="i-instrument">Instrument / role <span class="req">*</span></label>
-              <select class="form-select" id="i-instrument" name="instrument" required>
+              <select class="form-select" id="i-instrument" name="instrument" required data-fs-field>
                 <option value="" disabled selected>Select one…</option>
                 <option>Vocalist</option>
                 <option>Acoustic guitar</option>
@@ -99,7 +100,7 @@
             </div>
             <div class="form-group">
               <label class="form-label" for="i-attendance">How long attending Gateway? <span class="req">*</span></label>
-              <select class="form-select" id="i-attendance" name="attendance" required>
+              <select class="form-select" id="i-attendance" name="attendance" required data-fs-field>
                 <option value="" disabled selected>Select one…</option>
                 <option>Less than 3 months</option>
                 <option>3–6 months</option>
@@ -111,10 +112,10 @@
 
           <div class="form-group">
             <label class="form-label" for="i-about">Tell us a bit about yourself <span class="req">*</span></label>
-            <textarea class="form-textarea" id="i-about" name="about" placeholder="Your musical background, experience in worship settings, and anything else you'd like us to know…" required></textarea>
+            <textarea class="form-textarea" id="i-about" name="about" placeholder="Your musical background, experience in worship settings, and anything else you'd like us to know…" required data-fs-field></textarea>
           </div>
 
-          <button class="form-submit" type="submit">Send expression of interest</button>
+          <button class="form-submit" type="submit" data-fs-submit-btn>Send expression of interest</button>
         </form>
       </div>
     </div>
@@ -128,16 +129,10 @@
 </footer>
 
 <script src="nav.js"></script>
-<script src="forms.js"></script>
 <script>
-  function handleInterest(e) {
-    e.preventDefault();
-    submitForm(
-      document.getElementById('interest-form'),
-      document.getElementById('interest-status'),
-      'Thanks! We\'ll be in touch soon to arrange a chat.'
-    );
-  }
+  window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
+  formspree('initForm', { formElement: '#interest-form', formId: 'mojydyaq' });
 </script>
+<script src="https://unpkg.com/@formspree/ajax@1" defer></script>
 </body>
 </html>
