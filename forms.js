@@ -25,7 +25,7 @@ function submitForm(formEl, statusEl, successMsg) {
   })
   .catch(function () {
     statusEl.className = 'form-status error';
-    statusEl.textContent = 'Something went wrong — please try again or get in touch directly.';
+    statusEl.textContent = 'Something went wrong - please try again or get in touch directly.';
   })
   .finally(function () {
     btn.disabled = false;

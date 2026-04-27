@@ -159,7 +159,7 @@ var CHAPEL_ROTA = [
     {n:'Claire Knight',r:'Vocalist'},
   ]},
   {date:'14-Jun-2026',time:'9:00am',note:'Not yet confirmed',band:'',members:[]},
-  {date:'21-Jun-2026',time:'9:00am',note:"Father's Day — Communion",band:'',members:[
+  {date:'21-Jun-2026',time:'9:00am',note:"Father's Day - Communion",band:'',members:[
     {n:'Sam Consterdine',r:'Worship Leader, Vocalist, Guitarist',wl:true},
     {n:'Phil Jones',r:'Bass player'},
     {n:'Letetia Meyer',r:'Instrumentalist'},
