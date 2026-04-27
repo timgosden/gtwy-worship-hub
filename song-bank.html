@@ -80,7 +80,7 @@ function buildSections(rows) {
     // Skip empty rows
     if (!c0 && !c1 && !c2) return;
     // Skip the sheet title row
-    if (c0.indexOf('SONGBANK') >= 0 || c0.indexOf('SONG BANK') >= 0) return;
+    if (/SONG\s*BANK/i.test(c0)) return;
     // Skip column header rows
     if (c0 === 'Song Title') return;
 
@@ -97,7 +97,8 @@ function buildSections(rows) {
         title:     c0,
         firstLine: c1,
         ccli:      c2,
-        notes:     row[3] || ''
+        theme:     row[3] || '',
+        tag:       row[4] || ''
       });
     }
   });
@@ -114,30 +115,39 @@ function sectionClass(name) {
   return '';
 }
 
-function notesBadge(notes) {
-  if (!notes) return '';
-  var lower = notes.toLowerCase();
-  var cls = lower.indexOf('classic') >= 0 ? 'song-chip key' :
-            lower.indexOf('vineyard') >= 0 ? 'song-chip vineyard' : 'song-chip';
-  return '<span class="' + cls + '">' + esc(notes) + '</span>';
+function tagChip(tag) {
+  if (!tag) return '';
+  var lower = tag.toLowerCase();
+  var cls = 'song-chip';
+  if (lower.indexOf('classic') >= 0) cls += ' classic';
+  else if (lower.indexOf('vineyard') >= 0) cls += ' vineyard';
+  else if (lower.indexOf('homegrown') >= 0) cls += ' homegrown';
+  return '<span class="' + cls + '">' + esc(tag) + '</span>';
+}
+
+function themeChip(theme) {
+  if (!theme) return '';
+  return '<span class="song-chip theme">' + esc(theme) + '</span>';
 }
 
 function renderSections(sections) {
   var el = document.getElementById('song-list');
-  var total = sections.reduce(function(n, s) { return n + s.songs.length; }, 0);
+  var visible = sections.filter(function(s) { return s.songs.length; });
+  var totalSongs = visible.reduce(function(n, s) { return n + s.songs.length; }, 0);
 
-  if (!total) {
-    el.innerHTML = '<p style="color:var(--muted);font-size:13px;font-style:italic">No songs found.</p>';
+  if (!totalSongs) {
+    el.innerHTML = '<p class="song-empty">No matches.</p>';
     return;
   }
 
   var html = '';
-  sections.forEach(function(s) {
-    if (!s.songs.length) return;
+  visible.forEach(function(s) {
     var sc = sectionClass(s.section);
-    html += '<p class="rota-month-heading' + (sc ? ' ' + sc : '') + '">' + esc(s.section) + '</p>';
+    html += '<p class="rota-month-heading' + (sc ? ' ' + sc : '') + '">'
+      + esc(s.section)
+      + '</p>';
     s.songs.forEach(function(song) {
-      var ccliLink = song.ccli
+      var ccliLink = /^\d+$/.test(song.ccli)
         ? 'https://songselect.ccli.com/Songs/' + esc(song.ccli)
         : '';
       var titleEl = ccliLink
@@ -150,7 +160,8 @@ function renderSections(sections) {
         + (song.firstLine ? '<span class="song-first-line">' + esc(song.firstLine) + '</span>' : '')
         + '</div>'
         + '<div class="song-meta">'
-        + notesBadge(song.notes)
+        + themeChip(song.theme)
+        + tagChip(song.tag)
         + '</div>'
         + '</div>';
     });
@@ -167,7 +178,7 @@ function filterSongs(query) {
     return {
       section: s.section,
       songs: s.songs.filter(function(song) {
-        return (song.title + ' ' + song.firstLine + ' ' + song.ccli + ' ' + song.notes)
+        return (song.title + ' ' + song.firstLine + ' ' + song.ccli + ' ' + song.theme + ' ' + song.tag)
           .toLowerCase().indexOf(q) >= 0;
       })
     };
