@@ -877,7 +877,8 @@ footer p {
   color: var(--text);
 }
 
-.song-chip.key {
+.song-chip.key,
+.song-chip.classic {
   color: var(--gold);
   background: rgba(200,168,74,0.08);
   border-color: rgba(200,168,74,0.2);
@@ -904,8 +905,16 @@ footer p {
 .song-chip.muted { color: var(--muted); }
 
 .song-first-line {
+  flex-basis: 100%;
   font-size: 11px;
   color: var(--muted);
+  margin-top: 2px;
+}
+
+.song-empty {
+  color: var(--muted);
+  font-size: 13px;
+  font-style: italic;
 }
 
 /* ── VIDEO LIST ── */
