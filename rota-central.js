@@ -101,7 +101,7 @@ var CENTRAL_ROTA = [
     {n:'Pete McAllen',r:'Guitarist, Vocalist, Worship Leader',wl:true},
     {n:'Jo Yallop',r:'Keyboard Player, Vocalist'},
   ]},
-  {date:'05-Apr-2026',time:'8:45am',note:'Easter Sunday — baptisms',band:'Band 4',members:[
+  {date:'05-Apr-2026',time:'8:45am',note:'Easter Sunday - baptisms',band:'Band 4',members:[
     {n:'Josie Baker',r:'Vocalist, Worship Leader',wl:true},
     {n:'Tom Day',r:'Bass player, Guitarist'},
     {n:'Tim Gosden',r:'Guitarist, Vocalist, Worship Leader',wl:true},
@@ -224,7 +224,7 @@ var CENTRAL_ROTA = [
     {n:'Paul Swanborough',r:'Keyboard Player'},
     {n:'Rick Yallop',r:'Drummer'},
   ]},
-  {date:'30-Aug-2026',time:'8:45am',note:'No service — bank holiday',band:'',members:[]},
+  {date:'30-Aug-2026',time:'8:45am',note:'No service - bank holiday',band:'',members:[]},
 ];
 
 renderRota('rota-central', CENTRAL_ROTA);
