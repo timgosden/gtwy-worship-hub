@@ -597,6 +597,29 @@ footer p {
   color: #e08080;
 }
 
+[data-fs-success], [data-fs-error] {
+  display: none;
+  padding: 14px 16px;
+  border-radius: 8px;
+  font-size: 13.5px;
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+[data-fs-success][data-fs-active] {
+  display: block;
+  background: rgba(200,168,74,0.08);
+  border: 1px solid rgba(200,168,74,0.2);
+  color: var(--gold);
+}
+
+[data-fs-error=""][data-fs-active] {
+  display: block;
+  background: rgba(220,80,80,0.08);
+  border: 1px solid rgba(220,80,80,0.15);
+  color: #e08080;
+}
+
 @media (max-width: 480px) {
   .form-row { grid-template-columns: 1fr; }
 }
@@ -868,18 +891,15 @@ footer p {
 }
 
 .song-chip.homegrown {
-  color: #8acaa3;
-  background: rgba(70, 180, 105, 0.08);
-  border-color: rgba(70, 180, 105, 0.2);
+  color: #7ec8a0;
+  background: rgba(126,200,160,0.08);
+  border-color: rgba(126,200,160,0.2);
 }
 
 .song-chip.theme {
-  color: var(--muted);
-  background: transparent;
-  border-color: var(--border);
-  text-transform: none;
-  letter-spacing: 0;
-  font-weight: 500;
+  color: #b4a0d8;
+  background: rgba(180,160,216,0.08);
+  border-color: rgba(180,160,216,0.2);
 }
 
 .song-chip.muted { color: var(--muted); }

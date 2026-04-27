@@ -30,13 +30,12 @@
         class="form-input"
         id="song-search"
         type="search"
-        placeholder="Search songs, first lines or CCLI numbers…"
+        placeholder="Search songs, themes, first lines or CCLI numbers…"
         style="margin-bottom:16px"
         oninput="filterSongs(this.value)"
       />
 
       <div id="song-list"><p class="song-loading">Loading…</p></div>
-
 
     </div>
 
@@ -52,7 +51,7 @@
 <script>
 var SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTtNUsL0_HwRl1yIgsjSw2StvJCmg--YZB1UN3dgkRSEZoxTwY2BoRcCL9Vvd8osQ/pub?gid=1919290250&single=true&output=csv';
 
-// Parsed structure: [{section:'...', songs:[{title,firstLine,ccli,notes},...]}]
+// Columns: Song Title, First Line, CCLI, Section, Themes, Notes
 var allSections = [];
 
 function parseCSV(text) {
@@ -70,6 +69,8 @@ function parseCSV(text) {
   });
 }
 
+// Sheet layout: col A=title, col B=firstLine, col C=ccli, col D=themes, col E=notes
+// Sections are row headers (col A only, cols B-C empty)
 function buildSections(rows) {
   var sections = [];
   var current = null;
@@ -77,14 +78,12 @@ function buildSections(rows) {
   rows.forEach(function(row) {
     var c0 = row[0] || '', c1 = row[1] || '', c2 = row[2] || '';
 
-    // Skip empty rows
     if (!c0 && !c1 && !c2) return;
-    // Skip the sheet title row
-    if (/SONG\s*BANK/i.test(c0)) return;
-    // Skip column header rows
     if (c0 === 'Song Title') return;
+    if (c0.toUpperCase().indexOf('SONGBANK') >= 0 || c0.toUpperCase().indexOf('SONG BANK') >= 0) return;
+    if (c0.toUpperCase().indexOf('MULTISITE') >= 0) return;
 
-    // Section header: text only in first cell
+    // Section header: text only in col A
     if (c0 && !c1 && !c2) {
       current = { section: c0, songs: [] };
       sections.push(current);
@@ -97,8 +96,8 @@ function buildSections(rows) {
         title:     c0,
         firstLine: c1,
         ccli:      c2,
-        theme:     row[3] || '',
-        tag:       row[4] || ''
+        themes:    row[3] || '',
+        notes:     row[4] || ''
       });
     }
   });
@@ -111,45 +110,41 @@ function sectionClass(name) {
   if (s.indexOf('GATHERING') >= 0 || s.indexOf('CALL TO WORSHIP') >= 0) return 'sc-gathering';
   if (s.indexOf('REVELATION') >= 0) return 'sc-revelation';
   if (s.indexOf('RESPONSE') >= 0 || s.indexOf('ENCOUNTER') >= 0 || s.indexOf('INTIMACY') >= 0) return 'sc-response';
-  if (s.indexOf('HOMEGROWN') >= 0 || s.indexOf('GATEWAY') >= 0) return 'sc-homegrown';
+  if (s.indexOf('VINEYARD') >= 0 || s.indexOf('HOMEGROWN') >= 0 || s.indexOf('GATEWAY') >= 0) return 'sc-homegrown';
   return '';
 }
 
-function tagChip(tag) {
-  if (!tag) return '';
-  var lower = tag.toLowerCase();
-  var cls = 'song-chip';
-  if (lower.indexOf('classic') >= 0) cls += ' classic';
-  else if (lower.indexOf('vineyard') >= 0) cls += ' vineyard';
-  else if (lower.indexOf('homegrown') >= 0) cls += ' homegrown';
-  return '<span class="' + cls + '">' + esc(tag) + '</span>';
+function themeBadge(themes) {
+  if (!themes) return '';
+  return '<span class="song-chip theme">' + esc(themes) + '</span>';
 }
 
-function themeChip(theme) {
-  if (!theme) return '';
-  return '<span class="song-chip theme">' + esc(theme) + '</span>';
+function notesBadge(notes) {
+  if (!notes) return '';
+  var lower = notes.toLowerCase();
+  var cls = lower.indexOf('classic') >= 0 ? 'song-chip key' :
+            lower.indexOf('homegrown') >= 0 ? 'song-chip homegrown' :
+            lower.indexOf('vineyard') >= 0 || lower.indexOf('kxc') >= 0 ? 'song-chip vineyard' :
+            'song-chip';
+  return '<span class="' + cls + '">' + esc(notes) + '</span>';
 }
 
 function renderSections(sections) {
   var el = document.getElementById('song-list');
-  var visible = sections.filter(function(s) { return s.songs.length; });
-  var totalSongs = visible.reduce(function(n, s) { return n + s.songs.length; }, 0);
+  var total = sections.reduce(function(n, s) { return n + s.songs.length; }, 0);
 
-  if (!totalSongs) {
-    el.innerHTML = '<p class="song-empty">No matches.</p>';
+  if (!total) {
+    el.innerHTML = '<p style="color:var(--muted);font-size:13px;font-style:italic">No songs found.</p>';
     return;
   }
 
   var html = '';
-  visible.forEach(function(s) {
+  sections.forEach(function(s) {
+    if (!s.songs.length) return;
     var sc = sectionClass(s.section);
-    html += '<p class="rota-month-heading' + (sc ? ' ' + sc : '') + '">'
-      + esc(s.section)
-      + '</p>';
+    html += '<p class="rota-month-heading' + (sc ? ' ' + sc : '') + '">' + esc(s.section) + '</p>';
     s.songs.forEach(function(song) {
-      var ccliLink = /^\d+$/.test(song.ccli)
-        ? 'https://songselect.ccli.com/Songs/' + esc(song.ccli)
-        : '';
+      var ccliLink = /^\d+$/.test(song.ccli) ? 'https://songselect.ccli.com/Songs/' + esc(song.ccli) : '';
       var titleEl = ccliLink
         ? '<a class="song-title" href="' + ccliLink + '" target="_blank" rel="noopener">' + esc(song.title) + '</a>'
         : '<span class="song-title">' + esc(song.title) + '</span>';
@@ -160,8 +155,8 @@ function renderSections(sections) {
         + (song.firstLine ? '<span class="song-first-line">' + esc(song.firstLine) + '</span>' : '')
         + '</div>'
         + '<div class="song-meta">'
-        + themeChip(song.theme)
-        + tagChip(song.tag)
+        + themeBadge(song.themes)
+        + notesBadge(song.notes)
         + '</div>'
         + '</div>';
     });
@@ -178,7 +173,7 @@ function filterSongs(query) {
     return {
       section: s.section,
       songs: s.songs.filter(function(song) {
-        return (song.title + ' ' + song.firstLine + ' ' + song.ccli + ' ' + song.theme + ' ' + song.tag)
+        return (song.title + ' ' + song.firstLine + ' ' + song.ccli + ' ' + song.themes + ' ' + song.notes)
           .toLowerCase().indexOf(q) >= 0;
       })
     };
