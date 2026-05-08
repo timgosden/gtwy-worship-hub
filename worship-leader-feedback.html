@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Worship Leader Feedback - Worship Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .scale-row {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin: 6px 0 4px;
+    }
+    .scale-row input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .scale-row label {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 36px;
+      height: 36px;
+      padding: 0 8px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg-mid);
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .15s ease;
+      user-select: none;
+    }
+    .scale-row label:hover { border-color: var(--gold); }
+    .scale-row input[type="radio"]:checked + label {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: #1a1a1a;
+    }
+    .scale-row input[type="radio"]:focus-visible + label {
+      outline: 2px solid var(--gold);
+      outline-offset: 2px;
+    }
+    .scale-ends {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: .5px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .sub-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      margin-top: 14px;
+    }
+    .sub-hint {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+      line-height: 1.5;
+    }
+    .checklist {
+      margin: 6px 0 0;
+      padding-left: 18px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+  </style>
+</head>
+<body>
+
+<nav id="site-nav"></nav>
+<div class="drawer" id="drawer"></div>
+
+<div class="page">
+  <div class="page-inner">
+
+    <div class="section-label">For worship leaders</div>
+    <h1 class="page-title">Feedback<span>Journal</span></h1>
+    <div class="rule left"></div>
+    <p class="page-desc">
+      A reflection journal to help you grow as a worship leader. Use it after leading a service.
+    </p>
+
+    <div class="section-block">
+
+      <div class="card">
+        <div class="card-title">What is this?</div>
+        <p>This is a tool to help you develop as a worship leader.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">How can I help this to be a success?</div>
+        <p>You have to commit to the process, block out some time where you can think about your worship leading, answer the questions honestly and fully, and be open and ready to receive constructive feedback.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">How frequently should I complete this journal?</div>
+        <p>You can use this tool on a regular basis after leading worship, particularly in a larger setting like Sunday mornings. It will form the basis of your development alongside some coaching.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">How long should I take to complete the journal?</div>
+        <p>It is best to make notes after each time you lead. The journal is not meant to take a lot of time to complete - you can use bullet points or notes. You don't need to fill all the space for your thoughts and reflections - even just one thought in each section is helpful.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Do I have to answer all the sections?</div>
+        <p>This process will work best if you answer all the sections. If you do not understand what is being asked or struggle to put your answers into words then don't worry - we can discuss it when we meet.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Can I include worship leading in other settings?</div>
+        <p>If you feel it will help in your development then yes you can. For example, it may be that you feel more comfortable trying something out in a smaller group setting at first. On the whole, though, most of the examples should be from larger settings.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">What happens after I complete the form?</div>
+        <p>We will discuss this as part of the coaching process. The focus of the discussion will be to help you develop your skills.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">What happens to this form?</div>
+        <p>This form is yours to keep as a development journal. Other notes may be used as part of the coaching process.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Mini-Journal</div>
+        <p style="margin-bottom:20px">Take your time. Bullet points and short notes are absolutely fine.</p>
+
+        <div data-fs-success>Thanks - your reflections have been submitted. We'll pick this up in your next coaching conversation.</div>
+        <div data-fs-error>Something went wrong - please try again or get in touch directly.</div>
+
+        <form class="form" id="feedback-form">
+          <input type="hidden" name="formType" value="worshipLeaderFeedback" />
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="f-name">Name <span class="req">*</span></label>
+              <input class="form-input" id="f-name" name="name" type="text" placeholder="Jane Smith" required data-fs-field />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="f-dates">Dates to / from for this mini-journal <span class="req">*</span></label>
+              <input class="form-input" id="f-dates" name="dates" type="text" placeholder="e.g. 5 Jan - 23 Feb" required data-fs-field />
+            </div>
+          </div>
+
+          <h2 style="margin-top:28px;font-size:18px;color:var(--text)">1. Set preparation</h2>
+          <p class="sub-hint" style="margin-bottom:14px">Review the sets you have put together recently.</p>
+
+          <div class="form-group">
+            <label class="form-label" for="f-numsets">Number of sets you are reviewing</label>
+            <input class="form-input" id="f-numsets" name="numSets" type="text" placeholder="e.g. 3" data-fs-field />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="f-construction">How is your set constructed? Does it take the congregation on a journey? Do you have a theme?</label>
+            <span class="form-hint">e.g. Wimber's 'Five Phases of Worship' (Call to worship, Engagement, Expression, Visitation, Giving of Substance) or Dan Wilt's Gathering, Revelation, Response.</span>
+            <textarea class="form-textarea" id="f-construction" name="setConstruction" placeholder="Your reflections…" data-fs-field></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="f-sources">Think about the balance of the sources of songs you have chosen. Are you leaning towards songs from a particular source, why? Have you chosen some Vineyard songs? Were any of the songs home grown? How old or new are the songs you have chosen - is this deliberate?</label>
+            <textarea class="form-textarea" id="f-sources" name="songSources" placeholder="Your reflections…" data-fs-field></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="f-flexibility">Do you prefer to plan exactly which songs you will sing or pick more songs than you need ready to leave room for flexibility in the set?</label>
+            <textarea class="form-textarea" id="f-flexibility" name="setFlexibility" placeholder="Your reflections…" data-fs-field></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="f-keys">How do you decide what key each song is in? Can both males and females sing them in this key? How will this affect the transition between songs?</label>
+            <textarea class="form-textarea" id="f-keys" name="songKeys" placeholder="Your reflections…" data-fs-field></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="f-youth">Does your set include songs our youth can engage with? What might help or hinder this?</label>
+            <textarea class="form-textarea" id="f-youth" name="youthEngagement" placeholder="Your reflections…" data-fs-field></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="f-tempo">How does the tempo of the songs you have chosen affect the progression of the set?</label>
+            <textarea class="form-textarea" id="f-tempo" name="tempoProgression" placeholder="Your reflections…" data-fs-field></textarea>
+          </div>
+
+          <h2 style="margin-top:28px;font-size:18px;color:var(--text)">2. Rehearsals</h2>
+          <p class="sub-hint" style="margin-bottom:14px">Reflect and comment on your leading of rehearsals. We are looking to develop as musicians, worship leaders, and our skills leading a band. Think about the following in terms of developing the band:</p>
+
+          <ul class="checklist">
+            <li>Building authentic relationships within the band</li>
+            <li>Appropriate and creative use of different instruments</li>
+            <li>Effective shaping of songs</li>
+            <li>Contrast within songs</li>
+            <li>Development of vocal harmonies</li>
+            <li>Use of dynamic variations</li>
+            <li>Use of rhythmic variations</li>
+            <li>How we start and finish songs</li>
+            <li>Structure and effectiveness of rehearsals</li>
+            <li>Communication and team working between worship leaders</li>
+          </ul>
+
+          <div class="form-group" style="margin-top:14px">
+            <label class="form-label" for="f-rehearsals">Your thoughts and reflections</label>
+            <textarea class="form-textarea" id="f-rehearsals" name="rehearsals" placeholder="Your reflections…" style="min-height:200px" data-fs-field></textarea>
+          </div>
+
+          <h2 style="margin-top:28px;font-size:18px;color:var(--text)">3. Leading the set</h2>
+          <p class="sub-hint" style="margin-bottom:14px">Leading the congregation into intimate engagement with God.</p>
+
+          <div class="form-group">
+            <label class="form-label" for="f-recent">Reflect on your most recent time of leading worship. How did it go?</label>
+            <textarea class="form-textarea" id="f-recent" name="recentLead" placeholder="Your reflections…" data-fs-field></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="f-flow">Did the set flow smoothly? What impact did your preparation and rehearsal have on this?</label>
+            <textarea class="form-textarea" id="f-flow" name="setFlow" placeholder="Your reflections…" data-fs-field></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="f-transitions">Think about the transition between songs - how did this go?</label>
+            <textarea class="form-textarea" id="f-transitions" name="transitions" placeholder="Your reflections…" data-fs-field></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="f-pei">Did this time of worship contain elements of praise, encounter and intimacy?</label>
+            <textarea class="form-textarea" id="f-pei" name="praiseEncounterIntimacy" placeholder="Your reflections…" data-fs-field></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="f-spirit">Where did you lead people to? What was the Holy Spirit doing or speaking to you about during this time?</label>
+            <textarea class="form-textarea" id="f-spirit" name="holySpirit" placeholder="Your reflections…" data-fs-field></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="f-spontaneity">Did you leave some time and space for spontaneity? How did you build expectation? (not hype!)</label>
+            <textarea class="form-textarea" id="f-spontaneity" name="spontaneity" placeholder="Your reflections…" data-fs-field></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="f-change">What might you change, or do differently, another time?</label>
+            <textarea class="form-textarea" id="f-change" name="changeNextTime" placeholder="Your reflections…" data-fs-field></textarea>
+          </div>
+
+          <h2 style="margin-top:28px;font-size:18px;color:var(--text)">4. Skill development</h2>
+          <p class="sub-hint" style="margin-bottom:14px">Reflect on your musical ability as you lead worship. Be objective - set yourself some targets to improve your instrumental or vocal technique. The work of the Spirit is not necessarily contrary to human effort!</p>
+
+          <div class="form-group">
+            <label class="form-label">Vocal quality <span class="form-hint" style="font-weight:400">(tuning, tone, expression, phrasing)</span></label>
+            <div class="scale-ends"><span>Needs work</span><span>Excellent</span></div>
+            <div class="scale-row" role="radiogroup" aria-label="Vocal quality rating">
+              <input type="radio" name="vocalQualityRating" id="vq-1" value="1" data-fs-field /><label for="vq-1">1</label>
+              <input type="radio" name="vocalQualityRating" id="vq-2" value="2" data-fs-field /><label for="vq-2">2</label>
+              <input type="radio" name="vocalQualityRating" id="vq-3" value="3" data-fs-field /><label for="vq-3">3</label>
+              <input type="radio" name="vocalQualityRating" id="vq-4" value="4" data-fs-field /><label for="vq-4">4</label>
+              <input type="radio" name="vocalQualityRating" id="vq-5" value="5" data-fs-field /><label for="vq-5">5</label>
+              <input type="radio" name="vocalQualityRating" id="vq-6" value="6" data-fs-field /><label for="vq-6">6</label>
+              <input type="radio" name="vocalQualityRating" id="vq-7" value="7" data-fs-field /><label for="vq-7">7</label>
+              <input type="radio" name="vocalQualityRating" id="vq-8" value="8" data-fs-field /><label for="vq-8">8</label>
+              <input type="radio" name="vocalQualityRating" id="vq-9" value="9" data-fs-field /><label for="vq-9">9</label>
+              <input type="radio" name="vocalQualityRating" id="vq-10" value="10" data-fs-field /><label for="vq-10">10</label>
+            </div>
+            <textarea class="form-textarea" name="vocalQualityNotes" placeholder="Your reflections…" data-fs-field></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Instrumental quality <span class="form-hint" style="font-weight:400">(tuning, expression, rhythm, technique)</span></label>
+            <div class="scale-ends"><span>Needs work</span><span>Excellent</span></div>
+            <div class="scale-row" role="radiogroup" aria-label="Instrumental quality rating">
+              <input type="radio" name="instrumentalQualityRating" id="iq-1" value="1" data-fs-field /><label for="iq-1">1</label>
+              <input type="radio" name="instrumentalQualityRating" id="iq-2" value="2" data-fs-field /><label for="iq-2">2</label>
+              <input type="radio" name="instrumentalQualityRating" id="iq-3" value="3" data-fs-field /><label for="iq-3">3</label>
+              <input type="radio" name="instrumentalQualityRating" id="iq-4" value="4" data-fs-field /><label for="iq-4">4</label>
+              <input type="radio" name="instrumentalQualityRating" id="iq-5" value="5" data-fs-field /><label for="iq-5">5</label>
+              <input type="radio" name="instrumentalQualityRating" id="iq-6" value="6" data-fs-field /><label for="iq-6">6</label>
+              <input type="radio" name="instrumentalQualityRating" id="iq-7" value="7" data-fs-field /><label for="iq-7">7</label>
+              <input type="radio" name="instrumentalQualityRating" id="iq-8" value="8" data-fs-field /><label for="iq-8">8</label>
+              <input type="radio" name="instrumentalQualityRating" id="iq-9" value="9" data-fs-field /><label for="iq-9">9</label>
+              <input type="radio" name="instrumentalQualityRating" id="iq-10" value="10" data-fs-field /><label for="iq-10">10</label>
+            </div>
+            <textarea class="form-textarea" name="instrumentalQualityNotes" placeholder="Your reflections…" data-fs-field></textarea>
+          </div>
+
+          <div class="sub-label">Band leadership</div>
+          <p class="sub-hint">As leaders we work with and through others. Reflect on your band leadership ability. Again, be objective - set yourself some targets to improve your skills in this key area.</p>
+
+          <div class="form-group" style="margin-top:14px">
+            <label class="form-label">Solid introductions</label>
+            <div class="scale-ends"><span>Needs work</span><span>Excellent</span></div>
+            <div class="scale-row" role="radiogroup" aria-label="Solid introductions rating">
+              <input type="radio" name="introsRating" id="in-1" value="1" data-fs-field /><label for="in-1">1</label>
+              <input type="radio" name="introsRating" id="in-2" value="2" data-fs-field /><label for="in-2">2</label>
+              <input type="radio" name="introsRating" id="in-3" value="3" data-fs-field /><label for="in-3">3</label>
+              <input type="radio" name="introsRating" id="in-4" value="4" data-fs-field /><label for="in-4">4</label>
+              <input type="radio" name="introsRating" id="in-5" value="5" data-fs-field /><label for="in-5">5</label>
+              <input type="radio" name="introsRating" id="in-6" value="6" data-fs-field /><label for="in-6">6</label>
+              <input type="radio" name="introsRating" id="in-7" value="7" data-fs-field /><label for="in-7">7</label>
+              <input type="radio" name="introsRating" id="in-8" value="8" data-fs-field /><label for="in-8">8</label>
+              <input type="radio" name="introsRating" id="in-9" value="9" data-fs-field /><label for="in-9">9</label>
+              <input type="radio" name="introsRating" id="in-10" value="10" data-fs-field /><label for="in-10">10</label>
+            </div>
+            <textarea class="form-textarea" name="introsNotes" placeholder="Your reflections…" data-fs-field></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Clear in-set cues</label>
+            <div class="scale-ends"><span>Needs work</span><span>Excellent</span></div>
+            <div class="scale-row" role="radiogroup" aria-label="Clear in-set cues rating">
+              <input type="radio" name="cuesRating" id="cu-1" value="1" data-fs-field /><label for="cu-1">1</label>
+              <input type="radio" name="cuesRating" id="cu-2" value="2" data-fs-field /><label for="cu-2">2</label>
+              <input type="radio" name="cuesRating" id="cu-3" value="3" data-fs-field /><label for="cu-3">3</label>
+              <input type="radio" name="cuesRating" id="cu-4" value="4" data-fs-field /><label for="cu-4">4</label>
+              <input type="radio" name="cuesRating" id="cu-5" value="5" data-fs-field /><label for="cu-5">5</label>
+              <input type="radio" name="cuesRating" id="cu-6" value="6" data-fs-field /><label for="cu-6">6</label>
+              <input type="radio" name="cuesRating" id="cu-7" value="7" data-fs-field /><label for="cu-7">7</label>
+              <input type="radio" name="cuesRating" id="cu-8" value="8" data-fs-field /><label for="cu-8">8</label>
+              <input type="radio" name="cuesRating" id="cu-9" value="9" data-fs-field /><label for="cu-9">9</label>
+              <input type="radio" name="cuesRating" id="cu-10" value="10" data-fs-field /><label for="cu-10">10</label>
+            </div>
+            <textarea class="form-textarea" name="cuesNotes" placeholder="Your reflections…" data-fs-field></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Smooth transitions</label>
+            <div class="scale-ends"><span>Needs work</span><span>Excellent</span></div>
+            <div class="scale-row" role="radiogroup" aria-label="Smooth transitions rating">
+              <input type="radio" name="transitionsRating" id="tr-1" value="1" data-fs-field /><label for="tr-1">1</label>
+              <input type="radio" name="transitionsRating" id="tr-2" value="2" data-fs-field /><label for="tr-2">2</label>
+              <input type="radio" name="transitionsRating" id="tr-3" value="3" data-fs-field /><label for="tr-3">3</label>
+              <input type="radio" name="transitionsRating" id="tr-4" value="4" data-fs-field /><label for="tr-4">4</label>
+              <input type="radio" name="transitionsRating" id="tr-5" value="5" data-fs-field /><label for="tr-5">5</label>
+              <input type="radio" name="transitionsRating" id="tr-6" value="6" data-fs-field /><label for="tr-6">6</label>
+              <input type="radio" name="transitionsRating" id="tr-7" value="7" data-fs-field /><label for="tr-7">7</label>
+              <input type="radio" name="transitionsRating" id="tr-8" value="8" data-fs-field /><label for="tr-8">8</label>
+              <input type="radio" name="transitionsRating" id="tr-9" value="9" data-fs-field /><label for="tr-9">9</label>
+              <input type="radio" name="transitionsRating" id="tr-10" value="10" data-fs-field /><label for="tr-10">10</label>
+            </div>
+            <textarea class="form-textarea" name="transitionsNotes" placeholder="Your reflections…" data-fs-field></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Working with the PA / AV team</label>
+            <div class="scale-ends"><span>Needs work</span><span>Excellent</span></div>
+            <div class="scale-row" role="radiogroup" aria-label="PA AV teamwork rating">
+              <input type="radio" name="paavRating" id="pa-1" value="1" data-fs-field /><label for="pa-1">1</label>
+              <input type="radio" name="paavRating" id="pa-2" value="2" data-fs-field /><label for="pa-2">2</label>
+              <input type="radio" name="paavRating" id="pa-3" value="3" data-fs-field /><label for="pa-3">3</label>
+              <input type="radio" name="paavRating" id="pa-4" value="4" data-fs-field /><label for="pa-4">4</label>
+              <input type="radio" name="paavRating" id="pa-5" value="5" data-fs-field /><label for="pa-5">5</label>
+              <input type="radio" name="paavRating" id="pa-6" value="6" data-fs-field /><label for="pa-6">6</label>
+              <input type="radio" name="paavRating" id="pa-7" value="7" data-fs-field /><label for="pa-7">7</label>
+              <input type="radio" name="paavRating" id="pa-8" value="8" data-fs-field /><label for="pa-8">8</label>
+              <input type="radio" name="paavRating" id="pa-9" value="9" data-fs-field /><label for="pa-9">9</label>
+              <input type="radio" name="paavRating" id="pa-10" value="10" data-fs-field /><label for="pa-10">10</label>
+            </div>
+            <textarea class="form-textarea" name="paavNotes" placeholder="Your reflections…" data-fs-field></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="f-other">Any other thoughts?</label>
+            <textarea class="form-textarea" id="f-other" name="otherThoughts" placeholder="Your reflections…" data-fs-field></textarea>
+          </div>
+
+          <h2 style="margin-top:28px;font-size:18px;color:var(--text)">5. Personal development</h2>
+
+          <div class="form-group">
+            <label class="form-label" for="f-readlisten">What have you read or listened to recently to develop yourself as a worshipper, worship leader and follower of Jesus?</label>
+            <textarea class="form-textarea" id="f-readlisten" name="readListen" placeholder="Your reflections…" data-fs-field></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="f-takeaway">What is the main thing you have taken from this?</label>
+            <textarea class="form-textarea" id="f-takeaway" name="mainTakeaway" placeholder="Your reflections…" data-fs-field></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="f-heritage">How are you developing your knowledge of Vineyard worship heritage and practice?</label>
+            <textarea class="form-textarea" id="f-heritage" name="vineyardHeritage" placeholder="Your reflections…" data-fs-field></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="f-songlist">Think through your contribution to the song list - how can your suggestions show deeper thinking of the effectiveness of songs and knowledge of our worship values?</label>
+            <textarea class="form-textarea" id="f-songlist" name="songListContribution" placeholder="Your reflections…" data-fs-field></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="f-godspeak">How is God speaking to you about worship at the moment?</label>
+            <textarea class="form-textarea" id="f-godspeak" name="godSpeaking" placeholder="Your reflections…" data-fs-field></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="f-nextstep">What is the next step of your development and how will you do this?</label>
+            <textarea class="form-textarea" id="f-nextstep" name="nextStep" placeholder="Your reflections…" data-fs-field></textarea>
+          </div>
+
+          <button class="form-submit" type="submit" data-fs-submit-btn>Submit journal entry</button>
+        </form>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <a href="https://gatewayvineyard.church">GatewayVineyard.Church</a>
+  <p>Worship Team Hub</p>
+</footer>
+
+<script src="nav.js"></script>
+<script>
+  window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
+  formspree('initForm', { formElement: '#feedback-form', formId: 'REPLACE_WITH_FORMSPREE_ID' });
+</script>
+<script src="https://unpkg.com/@formspree/ajax@1" defer></script>
+</body>
+</html>
