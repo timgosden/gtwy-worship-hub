@@ -23,7 +23,6 @@
     <a href="#">Resources</a>
     <div class="drop">
       <a href="worship-leaders.html">Worship Leaders</a>
-      <a href="song-bank.html">Song Bank</a>
       <a href="songwriting.html">Songwriting</a>
       <a href="training.html">Training</a>
       <a href="apps.html">Apps</a>
@@ -46,7 +45,6 @@
 <a href="rotas.html" onclick="closeDrawer()">Rotas</a>
 <a href="#" onclick="closeDrawer()" style="color:var(--gold)">Resources</a>
 <a href="worship-leaders.html" onclick="closeDrawer()" class="sub">Worship Leaders</a>
-<a href="song-bank.html" onclick="closeDrawer()" class="sub">Song Bank</a>
 <a href="songwriting.html" onclick="closeDrawer()" class="sub">Songwriting</a>
 <a href="training.html" onclick="closeDrawer()" class="sub">Training</a>
 <a href="apps.html" onclick="closeDrawer()" class="sub">Apps</a>
