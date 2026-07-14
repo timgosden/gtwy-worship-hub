@@ -69,7 +69,7 @@ var CENTRAL_ROTA = [
     {n:'Charis Noakes',r:'Guitarist, Vocalist, Worship Leader',wl:true},
     {n:'Jo Yallop',r:'Keyboard Player'},
   ]},
-  {date:'22-Feb-2026',time:'8:45am',note:'',band:'Band 2',members:[
+  {date:'22-Feb-2026',time:'8:45am',note:'Week 2',band:'Band 2',members:[
     {n:'Mark Austin',r:'Bass player'},
     {n:'Josie Baker',r:'Guitarist, Vocalist, Worship Leader',wl:true},
     {n:'Tim Page',r:'Keyboard Player'},
@@ -101,7 +101,7 @@ var CENTRAL_ROTA = [
     {n:'Pete McAllen',r:'Guitarist, Vocalist, Worship Leader',wl:true},
     {n:'Jo Yallop',r:'Keyboard Player, Vocalist'},
   ]},
-  {date:'05-Apr-2026',time:'8:45am',note:'Easter Sunday - baptisms',band:'Band 4',members:[
+  {date:'05-Apr-2026',time:'8:45am',note:'Easter sunday - baptisms',band:'Band 4',members:[
     {n:'Josie Baker',r:'Vocalist, Worship Leader',wl:true},
     {n:'Tom Day',r:'Bass player, Guitarist'},
     {n:'Tim Gosden',r:'Guitarist, Vocalist, Worship Leader',wl:true},
@@ -126,7 +126,7 @@ var CENTRAL_ROTA = [
     {n:'Pete McAllen',r:'Guitarist, Vocalist, Worship Leader',wl:true},
     {n:'Becky Tidd',r:'Keyboard Player, Vocalist, Worship Leader',wl:true},
   ]},
-  {date:'03-May-2026',time:'8:45am',note:'',band:'Band 4',members:[
+  {date:'03-May-2026',time:'8:45am',note:'Communion',band:'Band 4',members:[
     {n:'Josie Baker',r:'Vocalist, Worship Leader',wl:true},
     {n:'Charis Noakes',r:'Guitarist'},
     {n:'Paul Swanborough',r:'Keyboard Player'},
@@ -140,22 +140,21 @@ var CENTRAL_ROTA = [
   ]},
   {date:'17-May-2026',time:'8:45am',note:'',band:'Band 2',members:[
     {n:'Mark Austin',r:'Bass player'},
-    {n:'Josie Baker',r:'Vocalist'},
-    {n:'Tim Gosden',r:'Guitarist, Vocalist, Worship Leader',wl:true},
+    {n:'Josie Baker',r:'Vocalist, Worship Leader',wl:true},
+    {n:'Tim Gosden',r:'Guitarist, Vocalist',tbc:true},
     {n:'Tim Page',r:'Keyboard Player'},
+    {n:'Rick Yallop',r:'Drummer'},
   ]},
-  {date:'24-May-2026',time:'8:45am',note:'',band:'Band 3',members:[
-    {n:'Estera Girdzeviciute',r:'Vocalist'},
+  {date:'24-May-2026',time:'8:45am',note:'Pentecost - Joy speaking',band:'Band 3',members:[
     {n:'Pete McAllen',r:'Guitarist, Vocalist, Worship Leader',wl:true},
-    {n:'Becky Tidd',r:'Keyboard Player, Vocalist, Worship Leader',wl:true},
+    {n:'Joshua South',r:'Keyboard Player'},
   ]},
   {date:'31-May-2026',time:'8:45am',note:'',band:'Band 4',members:[
     {n:'Josie Baker',r:'Vocalist, Worship Leader',wl:true},
     {n:'Tom Day',r:'Bass player, Guitarist'},
     {n:'Paul Swanborough',r:'Keyboard Player'},
-    {n:'Rick Yallop',r:'Drummer',clash:true},
   ]},
-  {date:'07-Jun-2026',time:'8:45am',note:'',band:'Band 1',members:[
+  {date:'07-Jun-2026',time:'8:45am',note:'Communion',band:'Band 1',members:[
     {n:'Phil Heald',r:'Drummer'},
     {n:'Charis Noakes',r:'Guitarist, Vocalist, Worship Leader',wl:true},
     {n:'Martha Williams',r:'Vocalist'},
@@ -163,66 +162,62 @@ var CENTRAL_ROTA = [
   ]},
   {date:'14-Jun-2026',time:'8:45am',note:'',band:'Band 2',members:[
     {n:'Mark Austin',r:'Bass player'},
-    {n:'Josie Baker',r:'Vocalist'},
-    {n:'Tim Gosden',r:'Guitarist, Vocalist, Worship Leader',wl:true},
+    {n:'Josie Baker',r:'Vocalist, Worship Leader',wl:true},
+    {n:'Sam Consterdine',r:'Guitarist, Vocalist'},
+    {n:'Tim Gosden',r:'Drummer'},
     {n:'Paul Swanborough',r:'Keyboard Player'},
   ]},
-  {date:'21-Jun-2026',time:'8:45am',note:'',band:'Band 3',members:[
-    {n:'Estera Girdzeviciute',r:'Vocalist'},
+  {date:'21-Jun-2026',time:'8:45am',note:'Tim P available',band:'Band 3',members:[
+    {n:'Estera Girdzeviciute',r:'Vocalist',tbc:true},
     {n:'Pete McAllen',r:'Guitarist, Vocalist, Worship Leader',wl:true},
     {n:'Becky Tidd',r:'Keyboard Player, Vocalist, Worship Leader',wl:true},
   ]},
-  {date:'28-Jun-2026',time:'8:45am',note:'',band:'Band 4',members:[
-    {n:'Josie Baker',r:'Vocalist, Worship Leader',wl:true},
+  {date:'28-Jun-2026',time:'8:45am',note:'Introduce - Do It Again Lord',band:'Band 4',members:[
+    {n:'Josie Baker',r:'Supporting Vocalist'},
     {n:'Tom Day',r:'Bass player, Guitarist'},
+    {n:'Tim Gosden',r:'Guitarist, Vocalist, Worship Leader',wl:true},
     {n:'Tim Page',r:'Keyboard Player'},
     {n:'Rick Yallop',r:'Drummer',clash:true},
   ]},
-  {date:'05-Jul-2026',time:'8:45am',note:'',band:'Band 1',members:[
-    {n:'Phil Heald',r:'Bass player'},
+  {date:'05-Jul-2026',time:'8:45am',note:'Communion - Josie available vox',band:'Band 1',members:[
+    {n:'Josie Baker',r:'Supporting Vocalist'},
+    {n:'Phil Heald',r:'Drummer',tbc:true},
     {n:'Charis Noakes',r:'Guitarist, Vocalist, Worship Leader',wl:true},
-    {n:'Martha Williams',r:'Vocalist, Worship Leader',wl:true},
+    {n:'Joshua South',r:''},
     {n:'Jo Yallop',r:'Keyboard Player'},
   ]},
   {date:'12-Jul-2026',time:'8:45am',note:'',band:'Band 2',members:[
     {n:'Mark Austin',r:'Bass player'},
-    {n:'Josie Baker',r:'Vocalist'},
-    {n:'Tim Gosden',r:'Guitarist, Vocalist, Worship Leader',wl:true},
+    {n:'Josie Baker',r:'Vocalist, Worship Leader',wl:true},
+    {n:'Tim Gosden',r:'Guitarist, Vocalist'},
     {n:'Tim Page',r:'Keyboard Player'},
   ]},
-  {date:'19-Jul-2026',time:'8:45am',note:'',band:'Band 3',members:[
-    {n:'Estera Girdzeviciute',r:'Vocalist'},
-    {n:'Pete McAllen',r:'Guitarist, Vocalist, Worship Leader',wl:true},
-    {n:'Becky Tidd',r:'Keyboard Player, Vocalist, Worship Leader',wl:true},
+  {date:'19-Jul-2026',time:'8:45am',note:'Rick and Jo/ Tim P available',band:'Band 3',members:[
+    {n:'Estera Girdzeviciute',r:'Vocalist',tbc:true},
+    {n:'Pete McAllen',r:'Guitarist, Vocalist, Worship Leader, Percussion/Cajon',wl:true},
+    {n:'Joshua South',r:'Keyboard Player'},
   ]},
-  {date:'26-Jul-2026',time:'8:45am',note:'',band:'Band 4',members:[
+  {date:'26-Jul-2026',time:'8:45am',note:'BBQ Sunday!',band:'Band 4',members:[]},
+  {date:'02-Aug-2026',time:'8:45am',note:'Communion - All site service - Introduce - Jesus Name Above All Names',band:'Band 1',members:[
     {n:'Josie Baker',r:'Vocalist, Worship Leader',wl:true},
-    {n:'Tom Day',r:'Bass player, Guitarist'},
-    {n:'Paul Swanborough',r:'Keyboard Player'},
-    {n:'Rick Yallop',r:'Drummer'},
-  ]},
-  {date:'02-Aug-2026',time:'8:45am',note:'',band:'Band 1',members:[
-    {n:'Phil Heald',r:'Drummer',tbc:true},
-    {n:'Charis Noakes',r:'Guitarist, Vocalist, Worship Leader',wl:true,tbc:true},
-    {n:'Martha Williams',r:'Vocalist'},
-    {n:'Jo Yallop',r:'Keyboard Player'},
+    {n:'Tim Gosden',r:'Guitarist, Vocalist, Worship Leader',wl:true},
+    {n:'Joel Graham',r:'Keyboard Player'},
+    {n:'Andrew Southgate',r:'Bass player'},
+    {n:'Martha Williams',r:'Supporting Vocalist'},
+    {n:'Rick Yallop',r:'Drummer',clash:true},
   ]},
   {date:'09-Aug-2026',time:'8:45am',note:'',band:'Band 2',members:[
     {n:'Mark Austin',r:'Bass player'},
-    {n:'Josie Baker',r:'Vocalist'},
     {n:'Tim Gosden',r:'Guitarist, Vocalist, Worship Leader',wl:true},
     {n:'Tim Page',r:'Keyboard Player'},
   ]},
-  {date:'16-Aug-2026',time:'8:45am',note:'',band:'Band 3',members:[
-    {n:'Estera Girdzeviciute',r:'Vocalist'},
-    {n:'Pete McAllen',r:'Guitarist, Vocalist, Worship Leader',wl:true},
-    {n:'Becky Tidd',r:'Keyboard Player, Vocalist, Worship Leader',wl:true},
-  ]},
-  {date:'23-Aug-2026',time:'8:45am',note:'',band:'Band 4',members:[
+  {date:'16-Aug-2026',time:'8:45am',note:'Community Sunday at Chapel site',band:'',members:[]},
+  {date:'23-Aug-2026',time:'8:45am',note:'Tim P',band:'Band 4',members:[
     {n:'Josie Baker',r:'Vocalist, Worship Leader',wl:true},
-    {n:'Tom Day',r:'Bass player, Guitarist',tbc:true},
+    {n:'Tom Day',r:'Bass player',tbc:true},
+    {n:'Joshua South',r:'Guitarist'},
     {n:'Paul Swanborough',r:'Keyboard Player'},
-    {n:'Rick Yallop',r:'Drummer'},
+    {n:'Rick Yallop',r:'Drummer',clash:true},
   ]},
   {date:'30-Aug-2026',time:'8:45am',note:'No service - bank holiday',band:'',members:[]},
 ];
