@@ -77,7 +77,8 @@ function parseCSV(text) {
   return rows;
 }
 
-var COLS = { title: 0, firstLine: 1, ccli: 2, link: 3, key: 4, bpm: 5, central: 6, chapel: 7, themes: -1, notes: -1 };
+// Sheet columns: TITLE | Alt Title | CCLI Number | Link | BPM | Key | Tag 1 | Tag 2
+var COLS = { title: 0, firstLine: 1, ccli: 2, link: 3, bpm: 4, key: 5, themes: 6, themes2: 7, central: -1, chapel: -1, notes: -1 };
 
 // Returns the number of recognised header labels in the row
 function detectColumns(row) {
@@ -92,7 +93,10 @@ function detectColumns(row) {
     else if (h.indexOf('bpm') >= 0 || h.indexOf('tempo') >= 0) { found.bpm = i; hits++; }
     else if (h.indexOf('central') >= 0) { found.central = i; hits++; }
     else if (h.indexOf('chapel') >= 0) { found.chapel = i; hits++; }
-    else if (h.indexOf('theme') >= 0 || h.indexOf('tag') >= 0) { found.themes = i; hits++; }
+    else if (h.indexOf('theme') >= 0 || h.indexOf('tag') >= 0) {
+      if (found.themes === undefined) found.themes = i; else found.themes2 = i;
+      hits++;
+    }
     else if (h.indexOf('note') >= 0) { found.notes = i; hits++; }
     else if (h === 'song' || h === 'title' || h.indexOf('song title') >= 0) { found.title = i; hits++; }
   });
@@ -152,6 +156,7 @@ function buildSections(rows) {
       central:   cell(row, COLS.central),
       chapel:    cell(row, COLS.chapel),
       themes:    cell(row, COLS.themes),
+      themes2:   cell(row, COLS.themes2),
       notes:     cell(row, COLS.notes)
     });
   });
@@ -223,6 +228,7 @@ function renderSections(sections) {
         + keyBadge(song.key)
         + bpmBadge(song.bpm)
         + themeBadge(song.themes)
+        + themeBadge(song.themes2)
         + notesBadge(song.notes)
         + '</div>'
         + '</div>';
@@ -240,7 +246,7 @@ function filterSongs(query) {
     return {
       section: s.section,
       songs: s.songs.filter(function(song) {
-        return (song.title + ' ' + song.firstLine + ' ' + song.ccli + ' ' + song.themes + ' ' + song.notes + ' ' + song.bpm + ' ' + song.key)
+        return (song.title + ' ' + song.firstLine + ' ' + song.ccli + ' ' + song.themes + ' ' + song.themes2 + ' ' + song.notes + ' ' + song.bpm + ' ' + song.key)
           .toLowerCase().indexOf(q) >= 0;
       })
     };
