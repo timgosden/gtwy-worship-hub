@@ -63,11 +63,10 @@
           if (meta) body += '<div class="rota-meta">' + meta + '</div>';
           body += '<ul class="rota-members">';
           r.members.forEach(function(m) {
-            var nc = 'rota-name' + (m.wl ? ' is-wl' : '') + (m.clash ? ' is-clash' : '');
+            var nc = 'rota-name' + (m.wl ? ' is-wl' : '') + (m.unavail ? ' is-unavail' : '');
             body += '<li class="rota-member"><span class="' + nc + '">' + esc(m.n) + '</span>';
             if (m.r) body += '<span class="rota-roles">' + esc(m.r) + '</span>';
-            if (m.clash) body += '<span class="rota-badge clash">clash</span>';
-            if (m.tbc)   body += '<span class="rota-badge tbc">tbc</span>';
+            if (m.unavail) body += '<span class="rota-badge unavail">unavailable</span>';
             body += '</li>';
           });
           body += '</ul>';
