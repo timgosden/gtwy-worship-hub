@@ -737,7 +737,7 @@ footer p {
 }
 
 .rota-name.is-wl { color: var(--gold); }
-.rota-name.is-clash { text-decoration: line-through; color: var(--muted); }
+.rota-name.is-unavail { text-decoration: line-through; color: var(--muted); }
 
 .rota-roles {
   font-size: 11px;
@@ -753,21 +753,15 @@ footer p {
   padding: 1px 5px;
 }
 
-.rota-badge.clash {
+.rota-badge.unavail {
   background: rgba(220,80,80,0.12);
   border: 1px solid rgba(220,80,80,0.2);
   color: #e07070;
 }
 
-.rota-badge.tbc {
-  background: rgba(120,138,142,0.1);
-  border: 1px solid rgba(120,138,142,0.2);
-  color: var(--muted);
-}
-
 .rota-no-members {
   font-size: 13px;
-  color: var(--muted2);
+  color: var(--muted);
   font-style: italic;
 }
 
