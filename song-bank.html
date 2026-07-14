@@ -51,82 +51,109 @@
 <script>
 var SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQnrYlj8Sk1pBs5_D4ByZz7leBs_aM_40zE_g-Ih3eAYWqklRo3eVc9XuziiRCGGg/pub?gid=444275959&single=true&output=csv';
 
-// Columns are detected from the sheet's header row (Song Title, First Line,
-// CCLI, Themes, Notes, BPM, SongSelect) and fall back to that order.
+// Sheet columns: Song Title | First Line | CCLI | Songselect Link | Key | BPM |
+// Introduce - Central | Introduce - Chapel. The header row is detected by its
+// labels (and its first cell may double as the first section name, e.g.
+// "Gathering - a call to worship").
 var allSections = [];
 
+// Quote-aware CSV parser - handles commas AND newlines inside quoted cells
 function parseCSV(text) {
-  var lines = text.replace(/\r/g, '').split('\n');
-  return lines.map(function(line) {
-    var cells = [], cur = '', inQ = false;
-    for (var i = 0; i < line.length; i++) {
-      var c = line[i];
-      if (c === '"') { inQ = !inQ; }
-      else if (c === ',' && !inQ) { cells.push(cur.trim()); cur = ''; }
+  var rows = [], row = [], cur = '', inQ = false;
+  text = text.replace(/\r/g, '');
+  for (var i = 0; i < text.length; i++) {
+    var c = text[i];
+    if (inQ) {
+      if (c === '"' && text[i + 1] === '"') { cur += '"'; i++; }
+      else if (c === '"') { inQ = false; }
       else { cur += c; }
-    }
-    cells.push(cur.trim());
-    return cells;
-  });
+    } else if (c === '"') { inQ = true; }
+    else if (c === ',') { row.push(cur.trim()); cur = ''; }
+    else if (c === '\n') { row.push(cur.trim()); rows.push(row); row = []; cur = ''; }
+    else { cur += c; }
+  }
+  row.push(cur.trim());
+  rows.push(row);
+  return rows;
 }
 
-// Default column order; overridden by the sheet's header row if present
-var COLS = { title: 0, firstLine: 1, ccli: 2, themes: 3, notes: 4, bpm: 5, link: 6 };
+var COLS = { title: 0, firstLine: 1, ccli: 2, link: 3, key: 4, bpm: 5, central: 6, chapel: 7, themes: -1, notes: -1 };
 
+// Returns the number of recognised header labels in the row
 function detectColumns(row) {
-  var found = {};
+  var found = {}, hits = 0;
   row.forEach(function(cell, i) {
     var h = (cell || '').toLowerCase();
-    if (h.indexOf('title') >= 0 || h === 'song') found.title = i;
-    else if (h.indexOf('first') >= 0) found.firstLine = i;
-    else if (h.indexOf('ccli') >= 0 && h.indexOf('link') < 0) found.ccli = i;
-    else if (h.indexOf('theme') >= 0) found.themes = i;
-    else if (h.indexOf('note') >= 0) found.notes = i;
-    else if (h.indexOf('bpm') >= 0 || h.indexOf('tempo') >= 0) found.bpm = i;
-    else if (h.indexOf('songselect') >= 0 || h.indexOf('song select') >= 0 || h.indexOf('link') >= 0) found.link = i;
+    if (!h) return;
+    if (h.indexOf('first') >= 0) { found.firstLine = i; hits++; }
+    else if (h.indexOf('ccli') >= 0 && h.indexOf('link') < 0) { found.ccli = i; hits++; }
+    else if (h.indexOf('songselect') >= 0 || h.indexOf('song select') >= 0 || h.indexOf('link') >= 0) { found.link = i; hits++; }
+    else if (h === 'key' || h.indexOf('key') === 0) { found.key = i; hits++; }
+    else if (h.indexOf('bpm') >= 0 || h.indexOf('tempo') >= 0) { found.bpm = i; hits++; }
+    else if (h.indexOf('central') >= 0) { found.central = i; hits++; }
+    else if (h.indexOf('chapel') >= 0) { found.chapel = i; hits++; }
+    else if (h.indexOf('theme') >= 0) { found.themes = i; hits++; }
+    else if (h.indexOf('note') >= 0) { found.notes = i; hits++; }
+    else if (h.indexOf('title') >= 0 || h === 'song') { found.title = i; hits++; }
   });
-  if (found.title !== undefined) {
-    Object.keys(found).forEach(function(k) { COLS[k] = found[k]; });
-    return true;
-  }
-  return false;
+  if (hits >= 2) Object.keys(found).forEach(function(k) { COLS[k] = found[k]; });
+  return hits;
 }
 
-// Sections are rows with text in the title column only, everything else empty
+function cell(row, idx) {
+  return idx >= 0 ? (row[idx] || '') : '';
+}
+
 function buildSections(rows) {
   var sections = [];
   var current = null;
+  var headerDone = false;
 
   rows.forEach(function(row) {
     var filled = row.filter(function(c) { return (c || '').trim(); }).length;
-    var c0 = row[0] || '';
+    var c0 = (row[0] || '').trim();
 
     if (!filled) return;
-    if (c0 === 'Song Title' || (c0.toLowerCase().indexOf('title') >= 0 && detectColumns(row))) return;
     if (c0.toUpperCase().indexOf('SONGBANK') >= 0 || c0.toUpperCase().indexOf('SONG BANK') >= 0) return;
     if (c0.toUpperCase().indexOf('MULTISITE') >= 0) return;
 
-    var title = row[COLS.title] || '';
+    // Header row: contains column labels like CCLI / BPM / Songselect Link.
+    // Its first cell may also name the first section.
+    if (!headerDone && detectColumns(row) >= 2) {
+      headerDone = true;
+      if (c0 && c0.toLowerCase().indexOf('title') < 0 && c0.toLowerCase() !== 'song') {
+        current = { section: c0, songs: [] };
+        sections.push(current);
+      }
+      return;
+    }
+
+    var title = cell(row, COLS.title).trim();
     if (!title) return;
 
     // Section header: only the title cell is filled
-    if (filled === 1 && title) {
+    if (filled === 1) {
       current = { section: title, songs: [] };
       sections.push(current);
       return;
     }
 
-    if (current) {
-      current.songs.push({
-        title:     title,
-        firstLine: row[COLS.firstLine] || '',
-        ccli:      row[COLS.ccli] || '',
-        themes:    row[COLS.themes] || '',
-        notes:     row[COLS.notes] || '',
-        bpm:       row[COLS.bpm] || '',
-        link:      row[COLS.link] || ''
-      });
+    if (!current) {
+      current = { section: 'Songs', songs: [] };
+      sections.push(current);
     }
+    current.songs.push({
+      title:     title,
+      firstLine: cell(row, COLS.firstLine),
+      ccli:      cell(row, COLS.ccli),
+      link:      cell(row, COLS.link),
+      key:       cell(row, COLS.key),
+      bpm:       cell(row, COLS.bpm),
+      central:   cell(row, COLS.central),
+      chapel:    cell(row, COLS.chapel),
+      themes:    cell(row, COLS.themes),
+      notes:     cell(row, COLS.notes)
+    });
   });
 
   return sections;
@@ -146,9 +173,19 @@ function themeBadge(themes) {
   return '<span class="song-chip theme">' + esc(themes) + '</span>';
 }
 
+function keyBadge(key) {
+  if (!key) return '';
+  return '<span class="song-chip key">Key ' + esc(key) + '</span>';
+}
+
 function bpmBadge(bpm) {
   if (!bpm) return '';
   return '<span class="song-chip key">' + esc(bpm) + ' BPM</span>';
+}
+
+function introBadge(site, when) {
+  if (!when) return '';
+  return '<span class="song-chip vineyard">New - ' + esc(site) + ' ' + esc(when) + '</span>';
 }
 
 function notesBadge(notes) {
@@ -188,9 +225,12 @@ function renderSections(sections) {
         + (song.firstLine ? '<span class="song-first-line">' + esc(song.firstLine) + '</span>' : '')
         + '</div>'
         + '<div class="song-meta">'
+        + keyBadge(song.key)
         + bpmBadge(song.bpm)
         + themeBadge(song.themes)
         + notesBadge(song.notes)
+        + introBadge('Central', song.central)
+        + introBadge('Chapel', song.chapel)
         + '</div>'
         + '</div>';
     });
@@ -207,7 +247,7 @@ function filterSongs(query) {
     return {
       section: s.section,
       songs: s.songs.filter(function(song) {
-        return (song.title + ' ' + song.firstLine + ' ' + song.ccli + ' ' + song.themes + ' ' + song.notes + ' ' + song.bpm)
+        return (song.title + ' ' + song.firstLine + ' ' + song.ccli + ' ' + song.themes + ' ' + song.notes + ' ' + song.bpm + ' ' + song.key)
           .toLowerCase().indexOf(q) >= 0;
       })
     };
