@@ -17,7 +17,6 @@
   <li><a href="index.html">Home</a></li>
   <li><a href="values.html">Values</a></li>
   <li><a href="get-involved.html">Get Involved</a></li>
-  <li><a href="rotas.html">Rotas</a></li>
   <li><a href="song-bank.html">Song Bank</a></li>
   <li class="has-drop">
     <a href="#">Resources</a>
@@ -42,7 +41,6 @@
 <a href="index.html" onclick="closeDrawer()">Home</a>
 <a href="values.html" onclick="closeDrawer()">Our Values</a>
 <a href="get-involved.html" onclick="closeDrawer()">Get Involved</a>
-<a href="rotas.html" onclick="closeDrawer()">Rotas</a>
 <a href="song-bank.html" onclick="closeDrawer()">Song Bank</a>
 <a href="#" onclick="closeDrawer()" style="color:var(--gold)">Resources</a>
 <a href="roles.html" onclick="closeDrawer()" class="sub">Team Roles</a>
