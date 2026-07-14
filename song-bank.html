@@ -85,16 +85,16 @@ function detectColumns(row) {
   row.forEach(function(cell, i) {
     var h = (cell || '').toLowerCase();
     if (!h) return;
-    if (h.indexOf('first') >= 0) { found.firstLine = i; hits++; }
+    if (h.indexOf('first') >= 0 || h.indexOf('alt') >= 0) { found.firstLine = i; hits++; }
     else if (h.indexOf('ccli') >= 0 && h.indexOf('link') < 0) { found.ccli = i; hits++; }
     else if (h.indexOf('songselect') >= 0 || h.indexOf('song select') >= 0 || h.indexOf('link') >= 0) { found.link = i; hits++; }
     else if (h === 'key' || h.indexOf('key') === 0) { found.key = i; hits++; }
     else if (h.indexOf('bpm') >= 0 || h.indexOf('tempo') >= 0) { found.bpm = i; hits++; }
     else if (h.indexOf('central') >= 0) { found.central = i; hits++; }
     else if (h.indexOf('chapel') >= 0) { found.chapel = i; hits++; }
-    else if (h.indexOf('theme') >= 0) { found.themes = i; hits++; }
+    else if (h.indexOf('theme') >= 0 || h.indexOf('tag') >= 0) { found.themes = i; hits++; }
     else if (h.indexOf('note') >= 0) { found.notes = i; hits++; }
-    else if (h.indexOf('title') >= 0 || h === 'song') { found.title = i; hits++; }
+    else if (h === 'song' || h === 'title' || h.indexOf('song title') >= 0) { found.title = i; hits++; }
   });
   if (hits >= 2) Object.keys(found).forEach(function(k) { COLS[k] = found[k]; });
   return hits;
@@ -183,11 +183,6 @@ function bpmBadge(bpm) {
   return '<span class="song-chip key">' + esc(bpm) + ' BPM</span>';
 }
 
-function introBadge(site, when) {
-  if (!when) return '';
-  return '<span class="song-chip vineyard">New - ' + esc(site) + ' ' + esc(when) + '</span>';
-}
-
 function notesBadge(notes) {
   if (!notes) return '';
   var lower = notes.toLowerCase();
@@ -229,8 +224,6 @@ function renderSections(sections) {
         + bpmBadge(song.bpm)
         + themeBadge(song.themes)
         + notesBadge(song.notes)
-        + introBadge('Central', song.central)
-        + introBadge('Chapel', song.chapel)
         + '</div>'
         + '</div>';
     });
