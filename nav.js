@@ -19,11 +19,11 @@
   <li><a href="get-involved.html">Get Involved</a></li>
   <li><a href="roles.html">Team Roles</a></li>
   <li><a href="rotas.html">Rotas</a></li>
+  <li><a href="song-bank.html">Song Bank</a></li>
   <li class="has-drop">
     <a href="#">Resources</a>
     <div class="drop">
       <a href="worship-leaders.html">Worship Leaders</a>
-      <a href="song-bank.html">Song Bank</a>
       <a href="songwriting.html">Songwriting</a>
       <a href="training.html">Training</a>
       <a href="apps.html">Apps</a>
@@ -44,9 +44,9 @@
 <a href="get-involved.html" onclick="closeDrawer()">Get Involved</a>
 <a href="roles.html" onclick="closeDrawer()">Worship Team Roles</a>
 <a href="rotas.html" onclick="closeDrawer()">Rotas</a>
+<a href="song-bank.html" onclick="closeDrawer()">Song Bank</a>
 <a href="#" onclick="closeDrawer()" style="color:var(--gold)">Resources</a>
 <a href="worship-leaders.html" onclick="closeDrawer()" class="sub">Worship Leaders</a>
-<a href="song-bank.html" onclick="closeDrawer()" class="sub">Song Bank</a>
 <a href="songwriting.html" onclick="closeDrawer()" class="sub">Songwriting</a>
 <a href="training.html" onclick="closeDrawer()" class="sub">Training</a>
 <a href="apps.html" onclick="closeDrawer()" class="sub">Apps</a>
