@@ -288,8 +288,9 @@ h3 {
 
 /* ── TILES ── */
 .tiles {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 8px;
   margin-bottom: 52px;
 }
@@ -304,6 +305,7 @@ h3 {
   transition: border-color .2s, background .2s;
   text-align: left;
   display: block;
+  flex: 1 1 calc(50% - 8px);
 }
 
 .tile:hover {
@@ -961,5 +963,5 @@ footer p {
 }
 
 @media (min-width: 500px) {
-  .tiles { grid-template-columns: repeat(4, 1fr); }
+  .tile { flex: 0 1 200px; }
 }
